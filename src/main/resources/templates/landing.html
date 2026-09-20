@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Grid is the infrastructure for global commerce — helping businesses sell in multiple regions with local currencies.">
+    <meta name="keywords" content="global commerce, multi-currency commerce, cross-region selling, merchant platform, commerce infrastructure">
+    <meta name="author" content="Grid">
+    
+    <!-- SEO Meta Tags -->
+    <title>Grid — The Infrastructure for Global Commerce</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/gif" href="assets/images/bazar-temp-logo-removebg-preview.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/custom.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pure-black': '#000000',
+                        'pure-white': '#FFFFFF',
+                        'charcoal': '#1A1A1A',
+                        'medium-gray': '#4A4A4A',
+                        'light-gray': '#E5E5E5',
+                        'off-white': '#F8F8F8',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        'mono': ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans antialiased bg-pure-white text-pure-black">
+    
+    <!-- Header/Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm transition-all duration-300" id="header">
+        <nav class="container mx-auto px-6 py-1">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#hero" class="flex items-center space-x-2 smooth-scroll">
+                        <img src="assets/images/bazar-logo-rotating-temp.gif" alt="Grid Logo" class="h-20 md:h-24 lg:h-28 w-auto -my-5" id="logo-img">
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#platform" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.platform">Platform</a>
+                    <a href="#lifecycle" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.vision">Vision</a>
+                    <a href="#contact" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.company">Company</a>
+                    <a href="https://calendly.com/contact-quantumbazar/30min" target="_blank" rel="noopener noreferrer" class="bg-pure-black text-pure-white px-6 py-2 rounded-none hover:scale-105 transition-transform duration-200" data-i18n="header.nav.talkToUs">Talk to us</a>
+                    
+                    <!-- Language Selector -->
+                    <div class="language-selector-wrapper relative">
+                        <label for="language-selector" class="flex items-center gap-2 bg-pure-black text-pure-white px-4 py-2 rounded-none cursor-pointer hover:bg-gray-800 transition-colors duration-200">
+                            <!-- Globe Icon -->
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <select id="language-selector" class="bg-transparent border-none text-pure-white font-medium focus:outline-none cursor-pointer appearance-none pr-1 pointer-events-auto">
+                                <option value="en">EN</option>
+                                <option value="fr">FR</option>
+                                <option value="de">DE</option>
+                                <option value="es">ES</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-pure-black" id="mobile-menu-btn" aria-label="Toggle mobile menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden pt-4 pb-2" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="#platform" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.platform">Platform</a>
+                    <a href="#lifecycle" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.vision">Vision</a>
+                    <a href="#contact" class="text-medium-gray hover:text-pure-black transition-colors duration-200 smooth-scroll" data-i18n="header.nav.company">Company</a>
+                    <a href="https://calendly.com/contact-quantumbazar/30min" target="_blank" rel="noopener noreferrer" class="bg-pure-black text-pure-white px-6 py-2 rounded-none text-center hover:scale-105 transition-transform duration-200" data-i18n="header.nav.talkToUs">Talk to us</a>
+                    
+                    <!-- Mobile Language Selector -->
+                    <select id="mobile-language-selector" class="bg-transparent border border-medium-gray text-pure-black px-3 py-2 rounded-none focus:outline-none focus:border-pure-black transition-colors duration-200 cursor-pointer">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+            </div>  
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center bg-pure-white pt-24 pb-20">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+                <!-- Left Content -->
+                <div class="fade-in order-2 lg:order-1">
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight">
+                        <span class="bg-pure-black text-pure-white px-4 py-2 inline-block" data-i18n="hero.headline" data-typewriter>Building the Digital Economy of Tomorrow</span>
+                    </h1>
+                    
+                    <!-- Subheadline -->
+                    <p class="text-lg md:text-xl text-medium-gray mb-8 leading-relaxed max-w-lg" data-i18n="hero.subheadline">
+                        The infrastructure helping merchants sell across regions with local currencies in one connected commerce system.
+                    </p>
+                    
+                    <!-- CTA Button -->
+                    <div class="flex flex-col sm:flex-row items-start gap-4">
+                        <a href="#platform" class="cta-button smooth-scroll bg-pure-black text-pure-white px-6 py-3 rounded-none text-base font-semibold hover:bg-gray-800 transition-all duration-200 flex items-center gap-3 shadow-lg">
+                            <span data-i18n="hero.ctaButton">Explore the platform</span>
+                            <span class="bg-indigo-600 rounded-none p-1.5 flex items-center justify-center">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right Video -->
+                <div class="fade-in order-1 lg:order-2">
+                    <div class="relative overflow-hidden shadow-2xl">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                            <source src="assets/images/hero-2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 01 — The Digital Economy -->
+    <section id="economy" class="py-20 md:py-28 bg-pure-white">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch fade-in-scroll">
+                <div class="relative min-h-[320px] md:min-h-[440px] lg:min-h-[560px] overflow-hidden rounded-sm bg-charcoal">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover" preload="metadata">
+                        <source src="assets/images/background.mp4" type="video/mp4">
+                        <source src="background.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="bg-pure-black rounded-sm flex flex-col justify-center text-center px-8 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 platform-card-inverse">
+                    <p class="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-light-gray mb-8" data-i18n="economy.eyebrow">01 — The Digital Economy</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-pure-white mb-8" data-i18n="economy.title">Building the infrastructure for modern business.</h2>
+                    <p class="text-xl md:text-2xl text-light-gray leading-snug max-w-2xl mx-auto" data-i18n="economy.description">
+                        Selling across regions, currencies and channels no longer requires disconnected tools. Grid connects commerce operations into one system built for global growth.
+                    </p>
+                    <div class="mt-10">
+                        <a href="#platform" class="inline-flex items-center justify-center border border-light-gray text-pure-white px-8 py-3 text-sm font-medium tracking-wide uppercase smooth-scroll" data-i18n="economy.cta">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 02 — The Grid Platform -->
+    <section id="platform" class="py-20 md:py-28 bg-pure-white">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch fade-in-scroll">
+                <div class="bg-pure-black rounded-sm px-8 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 platform-card-inverse">
+                    <div class="mb-12">
+                        <p class="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-light-gray mb-8" data-i18n="platform.eyebrow">02 — The Grid Platform</p>
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-pure-white mb-8" data-i18n="platform.title">One platform. Multiple systems.</h2>
+                        <p class="text-lg md:text-xl text-light-gray leading-relaxed" data-i18n="platform.subtitle">
+                            Every capability a digital economy needs, connected by default.
+                        </p>
+                    </div>
+
+                    <div class="border-t border-medium-gray">
+                        <div class="platform-row group">
+                            <span class="font-mono text-2xl md:text-3xl text-light-gray">01</span>
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-pure-white" data-i18n="platform.item1.title">Commerce</h3>
+                                <p class="text-light-gray leading-relaxed" data-i18n="platform.item1.description">Build and operate digital storefronts that adapt to how people actually buy.</p>
+                            </div>
+                        </div>
+                        <div class="platform-row group">
+                            <span class="font-mono text-2xl md:text-3xl text-light-gray">02</span>
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-pure-white" data-i18n="platform.item2.title">Intelligence</h3>
+                                <p class="text-light-gray leading-relaxed" data-i18n="platform.item2.description">AI-powered decisions across inventory, pricing, and growth.</p>
+                            </div>
+                        </div>
+                        <div class="platform-row group">
+                            <span class="font-mono text-2xl md:text-3xl text-light-gray">03</span>
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-pure-white" data-i18n="platform.item3.title">Global Selling</h3>
+                                <p class="text-light-gray leading-relaxed" data-i18n="platform.item3.description">Create stores in a region, specify the currency, and sell on a global scale.</p>
+                            </div>
+                        </div>
+                        <div class="platform-row group">
+                            <span class="font-mono text-2xl md:text-3xl text-light-gray">04</span>
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-pure-white" data-i18n="platform.item4.title">Infrastructure</h3>
+                                <p class="text-light-gray leading-relaxed" data-i18n="platform.item4.description">We provide out-of-the-box tools to create this experience and simplify transitioning into a digital business.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative min-h-[320px] md:min-h-[440px] lg:min-h-[560px] overflow-hidden rounded-sm bg-charcoal">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover" preload="metadata">
+                        <source src="assets/images/bazar-marketplace-beta-access.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 — The digital business experience -->
+    <section id="lifecycle" class="py-20 md:py-28 bg-pure-white">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch fade-in-scroll">
+                <div class="bg-pure-black rounded-sm p-8 md:p-10 lg:p-12 flex items-center">
+                    <div class="lifecycle-track lifecycle-track-inverse w-full">
+                        <div class="lifecycle-line" aria-hidden="true"></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage1">Discover</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage2">Create</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage3">Sell</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage4">Transact</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage5">Analyze</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage6">Optimize</span></div>
+                        <div class="lifecycle-stage"><span class="lifecycle-dot"></span><span data-i18n="lifecycle.stage7">Scale</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-pure-black rounded-sm flex flex-col justify-center text-center px-8 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 platform-card-inverse">
+                    <p class="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-light-gray mb-8" data-i18n="lifecycle.eyebrow">03 — The digital business experience</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-pure-white mb-8" data-i18n="lifecycle.title">Built for the entire digital business experience.</h2>
+                    <p class="text-xl md:text-2xl text-light-gray leading-snug max-w-2xl mx-auto" data-i18n="lifecycle.description">
+                        From first discovery to global scale, every stage runs on the same connected infrastructure.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section id="contact" class="py-24 md:py-32 bg-pure-black text-pure-white text-center">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto fade-in-scroll">
+                <h2 class="text-3xl md:text-5xl font-medium mb-6 leading-tight"><span class="inline-block bg-pure-white text-pure-black px-4 py-2" data-i18n="finalCta.title" data-typewriter>Scale without borders.</span></h2>
+                <p class="text-lg md:text-xl text-light-gray leading-relaxed mb-10" data-i18n="finalCta.subtitle">
+                    Grid is building the infrastructure for global commerce so merchants can sell products in multiple regions.
+                </p>
+                <a href="https://calendly.com/contact-quantumbazar/30min" target="_blank" rel="noopener noreferrer" class="cta-button bg-pure-white text-pure-black px-8 py-3.5 rounded-none text-base font-semibold hover:bg-gray-200 transition-all duration-200 inline-flex items-center gap-3 shadow-lg">
+                    <span data-i18n="finalCta.button">Get in touch</span>
+                    <span class="bg-indigo-600 rounded-none p-1.5 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-pure-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-pure-black text-pure-white py-12 font-sans">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-10">
+                    <!-- Brand Logo -->
+                    <!-- Nav Links -->
+                    <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base font-medium">
+                        <a href="#platform" class="text-light-gray hover:text-pure-white transition-colors smooth-scroll" data-i18n="footer.nav.platform">Platform</a>
+                        <a href="#lifecycle" class="text-light-gray hover:text-pure-white transition-colors smooth-scroll" data-i18n="footer.nav.vision">Vision</a>
+                        <a href="https://www.linkedin.com/company/quantumbazar/" target="_blank" rel="noopener noreferrer" class="text-light-gray hover:text-pure-white transition-colors">LinkedIn</a>
+                    </div>
+
+                    <!-- Back to Top -->
+                    <a href="#hero" class="text-light-gray hover:text-pure-white transition-colors text-base font-medium smooth-scroll" data-i18n="footer.backToTop">back to top</a>
+                </div>
+
+                <div class="flex justify-center items-center gap-4 border-t border-medium-gray pt-6">
+                    <p class="text-light-gray text-base font-medium" data-i18n="footer.copyright">All rights reserved © 2026 Grid</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Custom JavaScript -->
+    <script src="assets/js/language.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

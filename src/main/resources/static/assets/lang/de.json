@@ -1,0 +1,235 @@
+{
+  "header": {
+    "nav": {
+      "platform": "Plattform",
+      "technology": "Ecosystem",
+      "vision": "Lifecycle",
+      "company": "Kontakt",
+      "talkToUs": "Kontakt aufnehmen"
+    }
+  },
+  "hero": {
+    "headline": "Der Aufbau der digitalen Wirtschaft von morgen",
+    "subheadline": "Die Infrastruktur, mit der Händler in jeder Region mit lokalen Währungen verkaufen können - in einem verbundenen Commerce-System.",
+    "ctaButton": "Plattform entdecken"
+  },
+  "economy": {
+    "eyebrow": "01 — Die digitale Wirtschaft",
+    "title": "Handel wird zur Infrastruktur.",
+    "description": "Verkaufen über Regionen, Währungen und Kanäle hinweg sollte keine getrennten Tools erfordern. Grid verbindet Handelsabläufe in einem System, das für globales Wachstum gebaut ist.",
+    "cta": "Mehr erfahren"
+  },
+  "platform": {
+    "eyebrow": "03 — Die Grid-Plattform",
+    "title": "Eine Plattform. Mehrere Systeme.",
+    "subtitle": "Alle Fähigkeiten, die eine digitale Wirtschaft braucht, standardmäßig verbunden.",
+    "item1": {
+      "title": "Handel",
+      "description": "Erstellen und betreiben Sie digitale Storefronts, die sich an das tatsächliche Kaufverhalten anpassen."
+    },
+    "item2": {
+      "title": "Intelligenz",
+      "description": "KI-gestützte Entscheidungen für Bestand, Preise und Wachstum."
+    },
+    "item3": {
+      "title": "Multi-Währungs-Verkauf",
+      "description": "Verkaufen Sie in jeder Region mit lokaler Währungsunterstützung und regionstauglichen Storefront-Erlebnissen."
+    },
+    "item4": {
+      "title": "Infrastruktur",
+      "description": "Skalieren Sie von Ihrer ersten Transaktion bis zur globalen Wirtschaft auf einer Grundlage."
+    }
+  },
+  "ai": {
+    "eyebrow": "KI-Store-Manager",
+    "title": "Ihr Unternehmen hat einen KI-Operator.",
+    "subtitle": "Fragen. Entscheiden. Ausführen.",
+    "chat1": {
+      "you": "Welche Produkte performen diesen Monat unterdurchschnittlich?",
+      "ai": "17 Produkte liegen unter ihrer 30-Tage-Verkaufsbasis. Ich habe 6 Kandidaten für eine Aktion identifiziert.",
+      "action": "Empfehlungen ansehen"
+    },
+    "chat2": {
+      "you": "Erstelle eine 15%-Aktion für die drei besten Kandidaten.",
+      "ai": "Aktion erstellt.",
+      "stat1": "3 Produkte",
+      "stat2": "15 % Rabatt",
+      "stat3": "Gültig für 7 Tage",
+      "action": "Aktion veröffentlichen"
+    }
+  },
+  "ecosystem": {
+    "eyebrow": "03 — Eine vernetzte Wirtschaft",
+    "title": "Eine Wirtschaft. Ein vernetztes System.",
+    "description": "Kunden, Händler, Regionen und Währungen bewegen sich durch einen einzigen vernetzten Kern - sichtbar, messbar und stets synchron."
+  },
+  "lifecycle": {
+    "eyebrow": "02 — Der Handelszyklus",
+    "title": "Gebaut für den gesamten Handelszyklus.",
+    "description": "Von der ersten Entdeckung bis zur globalen Skalierung läuft jede Phase auf derselben vernetzten Infrastruktur.",
+    "stage1": "Entdecken",
+    "stage2": "Erstellen",
+    "stage3": "Verkaufen",
+    "stage4": "Abwickeln",
+    "stage5": "Analysieren",
+    "stage6": "Optimieren",
+    "stage7": "Skalieren"
+  },
+  "finalCta": {
+    "title": "Bauen wir, was als Nächstes kommt.",
+    "subtitle": "Grid baut die Infrastruktur für globalen Handel, damit Händler Produkte in jeder Region verkaufen können.",
+    "button": "Kontakt aufnehmen"
+  },
+  "footer": {
+    "nav": {
+      "platform": "Plattform",
+      "technology": "Ecosystem",
+      "vision": "Lifecycle"
+    },
+    "legal": {
+      "privacy": "datenschutzerklärung",
+      "cookies": "cookies-richtlinie"
+    },
+    "backToTop": "nach oben",
+    "copyright": "Alle Rechte vorbehalten © 2026 Grid"
+  },
+  "cookies": {
+    "title": "Cookies-Richtlinie - Bazar",
+    "heading": "Cookies-Richtlinie",
+    "noTracking": {
+      "title": "Keine Cookies, keine Verfolgung",
+      "description": "Bazar verwendet keine Cookies, Tracking-Pixel oder andere Tracking-Technologien auf dieser Website. Wir respektieren Ihre Privatsphäre und glauben an ein sauberes, cookie-freies Browsing-Erlebnis."
+    },
+    "whatAre": {
+      "title": "Was sind Cookies?",
+      "description": "Cookies sind kleine Textdateien, die Websites normalerweise auf Ihrem Gerät speichern, um sich Informationen über Sie zu merken, wie Ihre Präferenzen, Anmeldestatus oder Browsing-Verhalten."
+    },
+    "ourApproach": {
+      "title": "Unser Ansatz",
+      "description": "Wir haben bewusst darauf verzichtet, Cookies oder Tracking-Mechanismen auf unserer Website zu implementieren. Das bedeutet:"
+    },
+    "benefits": {
+      "noCookies": "Keine Cookies werden auf Ihrem Gerät gespeichert",
+      "noTracking": "Keine Verfolgung Ihres Browsing-Verhaltens",
+      "noAds": "Keine Werbe-Cookies oder Drittanbieter-Tracker",
+      "noAnalytics": "Keine Analytics-Cookies (wir verwenden nur serverseitige Analysen)",
+      "noConsent": "Keine Cookie-Zustimmungsbanner erforderlich"
+    },
+    "thirdParty": {
+      "title": "Drittanbieter-Dienste",
+      "description": "Obwohl unsere Website selbst keine Cookies verwendet, können Drittanbieter-Dienste (wie eingebettete Videos oder Social-Media-Inhalte) eigene Cookie-Richtlinien haben."
+    },
+    "browserSettings": {
+      "title": "Browser-Einstellungen",
+      "description": "Da wir keine Cookies verwenden, müssen Sie Ihre Browser-Einstellungen für unsere Website nicht anpassen. Sie können jedoch jederzeit Ihren Browser so konfigurieren, dass er Cookies von anderen Websites blockiert."
+    },
+    "futureChanges": {
+      "title": "Zukünftige Änderungen",
+      "description": "Sollten wir uns jemals entscheiden, in Zukunft Cookies zu implementieren, werden wir diese Richtlinie aktualisieren und die Benutzer entsprechend benachrichtigen. Solche Änderungen würden mit dem Schutz der Privatsphäre als oberster Priorität vorgenommen."
+    },
+    "contact": {
+      "title": "Fragen?",
+      "description": "Wenn Sie Fragen zu unserer Cookie-Richtlinie oder Datenschutzpraktiken haben, kontaktieren Sie uns bitte über die Kontaktinformationen auf unserer Hauptwebsite."
+    },
+    "lastUpdated": "Zuletzt aktualisiert: 21. November 2025",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung - BazarStore",
+    "heading": "Datenschutzerklärung",
+    "commitment": {
+      "title": "Unser Datenschutz-Engagement",
+      "description": "BazarStore verpflichtet sich zum Schutz Ihrer Privatsphäre und zur Gewährleistung transparenter Datenpraktiken. Diese Richtlinie beschreibt, wie wir Ihre Informationen sammeln, verwenden und schützen, wenn Sie unsere Webanwendung nutzen."
+    },
+    "dataCollection": {
+      "title": "Informationen, die wir sammeln",
+      "account": {
+        "title": "Kontoinformationen",
+        "description": "Wenn Sie ein Konto bei BazarStore erstellen, sammeln wir:",
+        "email": "E-Mail-Adresse (für Anmeldung und Kommunikation)",
+        "name": "Vollständiger Name (für Personalisierung)",
+        "profile": "Profilinformationen, die Sie bereitstellen möchten",
+        "preferences": "Benutzereinstellungen und -präferenzen"
+      },
+      "session": {
+        "title": "Sitzungsdaten",
+        "description": "Um ein nahtloses Erlebnis zu bieten, speichern wir Sitzungsdaten einschließlich:",
+        "login": "Anmeldestatus und Authentifizierungs-Token",
+        "cart": "Warenkorb-Inhalte",
+        "navigation": "Navigationshistorie innerhalb der App",
+        "temp": "Temporäre Daten für App-Funktionalität"
+      },
+      "usage": {
+        "title": "Nutzungsinformationen",
+        "description": "Wir sammeln aggregierte Nutzungsdaten zur Verbesserung unserer Dienste:",
+        "features": "Feature-Nutzungsstatistiken",
+        "performance": "App-Leistungsmetriken",
+        "errors": "Fehlerberichte und Crash-Logs"
+      }
+    },
+    "dataUse": {
+      "title": "Wie wir Ihre Informationen verwenden",
+      "service": "Bereitstellung und Wartung unserer E-Commerce-Plattform",
+      "account": "Verwaltung Ihres Kontos und Benutzerauthentifizierung",
+      "personalize": "Personalisierung Ihres Einkaufserlebnisses",
+      "communication": "Versendung wichtiger Service-Mitteilungen",
+      "security": "Erkennung und Verhinderung von Sicherheitsbedrohungen",
+      "improve": "Verbesserung unserer Dienste und Entwicklung neuer Features"
+    },
+    "dataStorage": {
+      "title": "Datenspeicherung und Sicherheit",
+      "location": {
+        "title": "Speicherort",
+        "description": "Ihre Daten werden auf sicheren Servern mit branchenüblicher Verschlüsselung und Zugangskontrollen gespeichert."
+      },
+      "session": {
+        "title": "Sitzungsmanagement",
+        "description": "Sitzungsdaten werden temporär im lokalen Speicher Ihres Browsers gespeichert und laufen aus Sicherheitsgründen automatisch nach Inaktivitätsphasen ab."
+      },
+      "security": {
+        "title": "Sicherheitsmaßnahmen",
+        "encryption": "Ende-zu-Ende-Verschlüsselung für sensible Daten",
+        "access": "Strenge Zugangskontrollen und Authentifizierung",
+        "monitoring": "Kontinuierliche Sicherheitsüberwachung",
+        "updates": "Regelmäßige Sicherheitsupdates und Patches"
+      }
+    },
+    "dataSharing": {
+      "title": "Datenweitergabe",
+      "description": "Wir verkaufen, vermieten oder teilen Ihre persönlichen Informationen nicht mit Dritten, außer in den folgenden begrenzten Umständen:",
+      "service": "Mit Dienstleistern, die bei der App-Funktionalität helfen (unter strengen Vertraulichkeitsvereinbarungen)",
+      "legal": "Wenn gesetzlich vorgeschrieben oder zum Schutz unserer Rechte",
+      "consent": "Mit Ihrer ausdrücklichen Zustimmung"
+    },
+    "userRights": {
+      "title": "Ihre Rechte",
+      "description": "Sie haben folgende Rechte bezüglich Ihrer persönlichen Informationen:",
+      "access": "Zugriff auf Ihre persönlichen Daten",
+      "correct": "Korrektur ungenauer Informationen",
+      "delete": "Löschung Ihres Kontos und Ihrer Daten beantragen",
+      "export": "Export Ihrer Daten in einem portablen Format",
+      "opt": "Abmeldung von nicht-essentiellen Mitteilungen"
+    },
+    "dataRetention": {
+      "title": "Datenspeicherung",
+      "description": "Wir speichern Ihre Informationen nur so lange, wie es zur Bereitstellung unserer Dienste und zur Erfüllung gesetzlicher Verpflichtungen erforderlich ist. Sitzungsdaten werden automatisch beim Abmelden oder nach längeren Inaktivitätsphasen gelöscht."
+    },
+    "minors": {
+      "title": "Datenschutz für Minderjährige",
+      "description": "BazarStore ist nicht für die Nutzung durch Kinder unter 13 Jahren bestimmt. Wir sammeln bewusst keine persönlichen Informationen von Kindern unter 13 Jahren."
+    },
+    "changes": {
+      "title": "Richtlinienänderungen",
+      "description": "Wir können diese Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Benutzer über wesentliche Änderungen per E-Mail oder über die Anwendungsschnittstelle benachrichtigen."
+    },
+    "contact": {
+      "title": "Kontaktinformationen",
+      "description": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben oder Ihre Rechte ausüben möchten, kontaktieren Sie uns bitte über die Kontaktinformationen auf unserer Hauptwebsite."
+    },
+    "lastUpdated": "Zuletzt aktualisiert: 21. November 2025",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "nav": {
+    "home": "Zurück zur Startseite"
+  }
+}

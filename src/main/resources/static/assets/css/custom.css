@@ -1,0 +1,834 @@
+/* ================================
+   BazarStore Landing Page - Custom CSS
+   ================================ */
+
+/* ================================
+   Global Styles & Reset
+   ================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #000000;
+    background-color: #FFFFFF;
+    overflow-x: hidden;
+}
+
+/* ================================
+   Typography
+   ================================ */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 900;
+}
+
+h2 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 700;
+}
+
+h3 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+}
+
+p {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    line-height: 1.7;
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Smooth Scroll Links */
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+/* ================================
+   Animations & Transitions
+   ================================ */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Fade In on Scroll */
+.fade-in-scroll {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+}
+
+.fade-in-scroll.visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+/* Futuristic typewriter treatment for headings and descriptions */
+[data-typewriter] {
+    position: relative;
+    letter-spacing: 0.02em;
+}
+
+[data-typewriter].typewriter-active {
+    border-right: 2px solid #4F46E5;
+    animation: typewriterCaret 0.8s step-end infinite;
+}
+
+[data-typewriter].typewriter-done {
+    border-right: none;
+}
+
+@keyframes typewriterCaret {
+    0%, 49% {
+        border-right-color: #4F46E5;
+    }
+    50%, 100% {
+        border-right-color: transparent;
+    }
+}
+
+/* Floating Animation for Hero Illustration */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes floatDelayed {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes floatDelayed2 {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-25px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: floatDelayed 7s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.animate-float-delayed-2 {
+    animation: floatDelayed2 8s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Geometric Pattern Background */
+.geometric-pattern {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+}
+
+/* Text Gradient Effect */
+.text-gradient {
+    background: linear-gradient(135deg, #000000 0%, #4A4A4A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ================================
+   System Diagrams (SVG)
+   ================================ */
+.diagram-node {
+    fill: #F8F8F8;
+    stroke: #1A1A1A;
+    stroke-width: 1.5;
+}
+
+.diagram-node-primary {
+    fill: #000000;
+    stroke: #000000;
+}
+
+.diagram-node-accent {
+    fill: #1A1A1A;
+    stroke: #1A1A1A;
+}
+
+.diagram-node-dark {
+    fill: #111111;
+    stroke: #4A4A4A;
+}
+
+.diagram-label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    fill: #1A1A1A;
+}
+
+.diagram-label-primary,
+.diagram-label-accent,
+.diagram-label-dark {
+    fill: #FFFFFF;
+}
+
+.diagram-sublabel {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.045em;
+    fill: rgba(255, 255, 255, 0.6);
+}
+
+/* Engineered mechanical depth while scrolling */
+.machine-scroll {
+    transform: none;
+    transition: none;
+    will-change: auto;
+}
+
+.diagram-line {
+    fill: none;
+    stroke: #C9C9C9;
+    stroke-width: 1.5;
+}
+
+.diagram-line-dark {
+    stroke: #333333;
+}
+
+.diagram-dot {
+    fill: #000000;
+}
+
+.diagram-dot-dark {
+    fill: #FFFFFF;
+}
+
+/* ================================
+   Platform Rows
+   ================================ */
+.platform-row {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #E5E5E5;
+    position: relative;
+    transition: padding-left 0.3s ease;
+}
+
+.platform-row:hover {
+    padding-left: 1rem;
+}
+
+.platform-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #000000;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+}
+
+.platform-row:hover::before {
+    transform: scaleY(1);
+}
+
+.platform-card-inverse .platform-row {
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.platform-card-inverse .platform-row::before {
+    background: #ffffff;
+}
+
+/* ================================
+   AI Chat Window Mockups
+   ================================ */
+.chat-window {
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+
+.chat-window-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.chat-window-body {
+    padding: 1.75rem;
+}
+
+.stat-pill {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+/* ================================
+   Commerce Lifecycle Track
+   ================================ */
+.lifecycle-track {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem 1rem;
+    padding-top: 1rem;
+}
+
+.lifecycle-line {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.35) 25%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.35) 75%, transparent);
+    background-size: 200% 100%;
+    animation: lifecycleFlow 5s linear infinite;
+}
+
+@keyframes lifecycleFlow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.lifecycle-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex: 1 1 auto;
+}
+
+.lifecycle-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #000000;
+}
+
+.lifecycle-track-inverse .lifecycle-stage {
+    color: #f3f4f6;
+}
+
+.lifecycle-track-inverse .lifecycle-line {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25) 25%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0.25) 75%, transparent);
+}
+
+.lifecycle-track-inverse .lifecycle-dot {
+    background: #ffffff;
+}
+
+/* ================================
+   Header Styles
+   ================================ */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(240, 245, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Logo Fallback (if image not loaded) */
+#logo-img {
+    display: inline-block;
+}
+
+#logo-img.hidden {
+    display: none;
+}
+
+/* Language Selector Styles */
+.language-selector-wrapper {
+    position: relative;
+}
+
+.language-selector-wrapper label {
+    position: relative;
+}
+
+.language-selector-wrapper select {
+    cursor: pointer;
+    padding-right: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.language-selector-wrapper select option {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 8px;
+}
+
+/* Remove default select arrow in IE */
+.language-selector-wrapper select::-ms-expand {
+    display: none;
+}
+
+/* Mobile Language Selector */
+#mobile-language-selector {
+    width: 100%;
+    cursor: pointer;
+}
+
+#mobile-language-selector option {
+    padding: 8px;
+}
+
+/* ================================
+   Button Styles
+   ================================ */
+.cta-button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cta-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ================================
+   Card Hover Effects
+   ================================ */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #000000;
+    transition: width 0.3s ease;
+}
+
+.feature-card:hover::after {
+    width: 100%;
+}
+
+/* ================================
+   Form Styles
+   ================================ */
+#beta-form input:focus,
+#beta-form select:focus,
+#beta-form textarea:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Validation States */
+input.valid,
+select.valid,
+textarea.valid {
+    border-color: #10B981;
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+    border-color: #EF4444;
+}
+
+/* Error Message Styles */
+.error-message {
+    display: none;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.error-message.active {
+    display: block;
+}
+
+/* Success State */
+#success-message {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Loading State */
+#submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Character Counter */
+#char-count {
+    font-weight: 600;
+}
+
+/* ================================
+   Responsive Design
+   ================================ */
+
+/* Mobile Menu */
+#mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+#mobile-menu.active {
+    display: block;
+    max-height: 300px;
+}
+
+/* Header background when mobile menu is open */
+#header.mobile-menu-open {
+    background-color: rgba(240, 245, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+}
+
+/* ================================
+   Accessibility
+   ================================ */
+
+/* Focus Visible for Keyboard Navigation */
+*:focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
+}
+
+/* Skip to Main Content Link (for screen readers) */
+.skip-to-main {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+}
+
+.skip-to-main:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ================================
+   Responsive Breakpoints
+   ================================ */
+
+/* Tablet */
+@media (max-width: 1023px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    /* Adjust padding for mobile */
+    section {
+        padding: 3rem 0;
+    }
+    
+    /* Stack hero buttons */
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    /* Adjust form padding */
+    #beta-form {
+        padding: 1.5rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    p {
+        font-size: 0.875rem;
+    }
+}
+
+/* ================================
+   Print Styles
+   ================================ */
+@media print {
+    header,
+    footer,
+    #contact {
+        display: none;
+    }
+    
+    body {
+        color: #000000;
+        background: #FFFFFF;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+}
+
+/* ================================
+   Dark Mode Support (Optional Enhancement)
+   ================================ */
+@media (prefers-color-scheme: dark) {
+    /* Uncomment to enable dark mode
+    body {
+        background-color: #1A1A1A;
+        color: #FFFFFF;
+    }
+    
+    #header {
+        background-color: rgba(26, 26, 26, 0.95);
+    }
+    
+    .bg-pure-white {
+        background-color: #1A1A1A;
+    }
+    
+    .bg-off-white {
+        background-color: #000000;
+    }
+    
+    .text-pure-black {
+        color: #FFFFFF;
+    }
+    
+    .text-medium-gray {
+        color: #E5E5E5;
+    }
+    */
+}
+
+/* ================================
+   Spinner Animation
+   ================================ */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ================================
+   Hero Illustration Styles
+   ================================ */
+.hero-illustration {
+    perspective: 1000px;
+}
+
+.hero-illustration svg {
+    transform-style: preserve-3d;
+}
+
+/* ================================
+   Scroll Progress Indicator (Optional)
+   ================================ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: #000000;
+    z-index: 9999;
+    transition: width 0.1s ease;
+}
+
+/* ================================
+   Custom Scrollbar (Webkit browsers)
+   ================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F8F8F8;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4A4A4A;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #000000;
+}
+
+/* ================================
+   Selection Styles
+   ================================ */
+::selection {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+::-moz-selection {
+    background-color: #000000;
+    color: #FFFFFF;
+}

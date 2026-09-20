@@ -1,0 +1,3166 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        th:content="${selectedProduct != null ? selectedProduct.description : store.storeResponseDto.description}"
+        content="Storefront" />
+  <title th:text="${selectedProduct != null
+      ? (selectedProduct.name + ' — ' + store.storeResponseDto.name)
+      : (store.storeResponseDto.name + ' — ' + store.storeResponseDto.description)}">Store</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN: ideal for this single-file prototype. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Alliance No.1', 'Alliance No.2', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Alliance No.1', 'Alliance No.2', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(255,255,255,.95), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(220,225,230,.45), transparent 28%),
+        #f7f7f5;
+      color: #111;
+    }
+    body[data-theme="dark"] {
+      background:
+        radial-gradient(circle at 15% 0%, rgba(20,20,25,.92), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(36,39,49,.8), transparent 28%),
+        #0b0b0f;
+      color: #f5f5f5;
+    }
+    body[data-theme="dark"] .glass,
+    body[data-theme="dark"] .chat-shell,
+    body[data-theme="dark"] .instagram-product-card,
+    body[data-theme="dark"] .omega-tool-card,
+    body[data-theme="dark"] .bg-white\/50,
+    body[data-theme="dark"] .bg-white\/60,
+    body[data-theme="dark"] .bg-white\/65,
+    body[data-theme="dark"] .bg-white\/70,
+    body[data-theme="dark"] .bg-white\/75,
+    body[data-theme="dark"] .bg-white\/80,
+    body[data-theme="dark"] .bg-white\/85,
+    body[data-theme="dark"] .bg-white\/90 {
+      background: rgba(17, 17, 20, 0.82) !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      color: #f5f5f5 !important;
+    }
+    body[data-theme="dark"] .border-black\/10,
+    body[data-theme="dark"] .border-black\/5 {
+      border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    body[data-theme="dark"] .text-black\/25,
+    body[data-theme="dark"] .text-black\/30 {
+      color: rgba(255, 255, 255, 0.45) !important;
+    }
+    body[data-theme="dark"] .text-black\/35,
+    body[data-theme="dark"] .text-black\/40,
+    body[data-theme="dark"] .text-black\/45,
+    body[data-theme="dark"] .text-black\/50,
+    body[data-theme="dark"] .text-black\/55,
+    body[data-theme="dark"] .text-black\/60,
+    body[data-theme="dark"] .text-black\/65,
+    body[data-theme="dark"] .text-black\/70,
+    body[data-theme="dark"] .text-black\/75 {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    body[data-theme="dark"] .placeholder\:text-black\/30::placeholder {
+      color: rgba(255, 255, 255, 0.45) !important;
+    }
+    body[data-theme="dark"] .bg-black,
+    body[data-theme="dark"] .bg-black\/5,
+    body[data-theme="dark"] .bg-black\/75,
+    body[data-theme="dark"] .bg-black\/80 {
+      color: #f5f5f5 !important;
+    }
+    body[data-theme="dark"] .bg-black,
+    body[data-theme="dark"] .bg-black\/75,
+    body[data-theme="dark"] .bg-black\/80,
+    body[data-theme="dark"] #cartButton,
+    body[data-theme="dark"] #checkoutButton,
+    body[data-theme="dark"] #addToCartButton,
+    body[data-theme="dark"] #chatSendButton {
+      background: #d8d8dc !important;
+      border-color: #d8d8dc !important;
+      color: #111 !important;
+    }
+    body[data-theme="dark"] #cartButton:hover,
+    body[data-theme="dark"] #checkoutButton:hover,
+    body[data-theme="dark"] #addToCartButton:hover,
+    body[data-theme="dark"] #chatSendButton:hover {
+      background: #c9c9cf !important;
+    }
+    body[data-theme="dark"] #shop {
+      background: rgba(12, 14, 18, 0.84) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    body[data-theme="dark"] .category-button {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+      color: rgba(255, 255, 255, 0.88) !important;
+    }
+    body[data-theme="dark"] .category-button.is-active {
+      background: #f2f3f5 !important;
+      border-color: #f2f3f5 !important;
+      color: #111 !important;
+    }
+    #cartDrawer {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(17,17,17,0.08);
+    }
+    body[data-theme="dark"] #cartDrawer {
+      background: rgba(14, 16, 20, 0.78) !important;
+      border-left-color: rgba(255,255,255,0.12);
+    }
+    .glass {
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 18px 50px rgba(0,0,0,.07);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .product-dialog-shell {
+      background: rgba(238, 240, 244, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: #111;
+      box-shadow: 0 24px 64px rgba(0,0,0,.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    body[data-theme="dark"] .product-dialog-shell .text-black\/35,
+    body[data-theme="dark"] .product-dialog-shell .text-black\/40,
+    body[data-theme="dark"] .product-dialog-shell .text-black\/45,
+    body[data-theme="dark"] .product-dialog-shell .text-black\/55,
+    body[data-theme="dark"] .product-dialog-shell .text-black\/60,
+    body[data-theme="dark"] .product-dialog-shell .text-black\/70 {
+      color: rgba(244,245,247,.78) !important;
+    }
+    body[data-theme="dark"] .product-dialog-shell .border-black\/10,
+    body[data-theme="dark"] .product-dialog-shell .border-black\/5 {
+      border-color: rgba(255,255,255,.16) !important;
+    }
+    body[data-theme="dark"] .product-dialog-shell .bg-white\/60,
+    body[data-theme="dark"] .product-dialog-shell .bg-white\/70,
+    body[data-theme="dark"] .product-dialog-shell .bg-white\/75 {
+      background: rgba(255,255,255,.08) !important;
+      color: #f4f5f7 !important;
+    }
+    body[data-theme="dark"] .product-dialog-shell .bg-black\/5 {
+      background: rgba(255,255,255,.12) !important;
+      color: #f4f5f7 !important;
+    }
+    body[data-theme="dark"] .product-dialog-shell select,
+    body[data-theme="dark"] .product-dialog-shell input {
+      background: rgba(255,255,255,.08) !important;
+      color: #f4f5f7 !important;
+      border-color: rgba(255,255,255,.18) !important;
+    }
+    /* Native <option> popups ignore the <select>'s translucent background and
+       default to a solid white list, so the inherited light text color above
+       becomes invisible. Give options an explicit solid dark background/text
+       (and hint the UA chrome via color-scheme) so the open dropdown stays
+       readable in dark mode without altering any other element's palette. */
+    body[data-theme="dark"] .product-dialog-shell select {
+      color-scheme: dark;
+    }
+    body[data-theme="dark"] .product-dialog-shell select option {
+      background-color: #1f2125 !important;
+      color: #f4f5f7 !important;
+    }
+    body[data-theme="dark"] .product-dialog-shell {
+      background: rgba(24, 26, 30, 0.94);
+      border-color: rgba(255,255,255,0.1);
+      box-shadow: 0 24px 64px rgba(0,0,0,.48);
+      color: #f4f5f7;
+    }
+    .glass-dark {
+      background: rgba(18,18,18,.76);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.20);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .product-card {
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+    }
+    .account-signin-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.74);
+      color: rgba(0,0,0,.78);
+      font-size: .875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background .2s ease, color .2s ease;
+    }
+    .profile-pill-link {
+      color: rgba(0,0,0,.78);
+      text-decoration: none;
+      background: rgba(0,0,0,.05);
+      transition: background .2s ease, color .2s ease;
+    }
+    .account-signin-link:hover,
+    .profile-pill-link:hover {
+      color: #000;
+    }
+    .account-signin-link:hover { background: rgba(255,255,255,.92); }
+    .profile-pill-link:hover { background: rgba(0,0,0,.1); }
+    body[data-theme="dark"] .account-signin-link {
+      border-color: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+    }
+    body[data-theme="dark"] .profile-pill-link {
+      border-color: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.86);
+    }
+    body[data-theme="dark"] .account-signin-link:hover {
+      background: rgba(255,255,255,.14);
+    }
+    body[data-theme="dark"] .profile-pill-link:hover {
+      background: rgba(255,255,255,.18);
+    }
+
+    .category-button.is-active {
+      background: #000 !important;
+      color: #fff !important;
+      border-color: #000 !important;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 50px rgba(0,0,0,.10);
+    }
+    .product-image {
+      transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    }
+    .product-card:hover .product-image {
+      transform: scale(1.045);
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { scrollbar-width: none; }
+    .fade-in {
+      animation: fadeIn .55s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    dialog::backdrop { background: rgba(0,0,0,.35); backdrop-filter: blur(8px); }
+
+    .chat-shell {
+      background: rgba(255,255,255,.64);
+      border: 1px solid rgba(255,255,255,.82);
+      box-shadow: 0 28px 90px rgba(0,0,0,.16);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+    }
+
+    .chat-message {
+      animation: chatIn .28s ease both;
+    }
+
+    @keyframes chatIn {
+      from { opacity: 0; transform: translateY(8px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-scroll::-webkit-scrollbar { width: 6px; }
+    .chat-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,.10);
+      border-radius: 999px;
+    }
+
+    .mobile-menu {
+      transform-origin: top center;
+      animation: mobileMenuIn .22s ease both;
+    }
+
+    .storefront-nav {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: rgba(17, 17, 17, 0.78);
+    }
+
+    .storefront-nav-link {
+      color: rgba(17, 17, 17, 0.7);
+    }
+
+    .storefront-nav-link:hover {
+      color: #111;
+    }
+
+    .storefront-icon-button {
+      color: rgba(17, 17, 17, 0.72);
+      border-color: rgba(17, 17, 17, 0.12);
+      transition: color .2s ease, background .2s ease;
+    }
+
+    .storefront-icon-button .theme-icon {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+
+    .storefront-icon-button:hover {
+      color: #111;
+      background: rgba(17, 17, 17, 0.08);
+    }
+
+    .storefront-checkout-pill {
+      background: #111;
+      color: #fff !important;
+      border-color: #111 !important;
+    }
+
+    .storefront-checkout-count {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff !important;
+    }
+
+    .storefront-mobile-menu {
+      background: rgba(255, 255, 255, 0.92) !important;
+      border-color: rgba(17, 17, 17, 0.08) !important;
+    }
+
+    .storefront-mobile-link {
+      color: rgba(17, 17, 17, 0.8);
+    }
+
+    .storefront-mobile-link:hover {
+      color: #111;
+      background: rgba(17, 17, 17, 0.08) !important;
+    }
+
+    .storefront-mobile-accent {
+      color: rgba(17, 17, 17, 0.35);
+    }
+
+    .storefront-mobile-menu-header {
+      border-color: rgba(17, 17, 17, 0.08) !important;
+    }
+
+    .storefront-mobile-menu-brand {
+      color: rgba(17, 17, 17, 0.92);
+    }
+
+    .storefront-mobile-menu-close {
+      color: rgba(17, 17, 17, 0.72);
+      background: transparent;
+      transition: color .2s ease, background .2s ease;
+    }
+
+    .storefront-mobile-menu-close:hover {
+      color: #111;
+      background: rgba(17, 17, 17, 0.08);
+    }
+
+    body[data-theme="dark"] .storefront-nav {
+      background: rgba(26, 26, 26, 0.72);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    body[data-theme="dark"] .storefront-nav-link {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    body[data-theme="dark"] .storefront-nav-link:hover {
+      color: #fff;
+    }
+
+    body[data-theme="dark"] .storefront-icon-button {
+      color: rgba(255, 255, 255, 0.75);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    body[data-theme="dark"] .storefront-icon-button:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    body[data-theme="dark"] .storefront-checkout-count {
+      background: rgba(17, 17, 17, 0.14);
+      color: #111 !important;
+    }
+
+    body[data-theme="dark"] #navStoreName {
+      color: #fff !important;
+    }
+
+    body[data-theme="dark"] .storefront-mobile-menu {
+      background: rgba(16, 16, 20, 0.92) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    body[data-theme="dark"] .storefront-mobile-link {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    body[data-theme="dark"] .storefront-mobile-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    body[data-theme="dark"] .storefront-mobile-accent {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    body[data-theme="dark"] .storefront-mobile-menu-header {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    body[data-theme="dark"] .storefront-mobile-menu-brand {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    body[data-theme="dark"] .storefront-mobile-menu-close {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    body[data-theme="dark"] .storefront-mobile-menu-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes mobileMenuIn {
+      from { opacity: 0; transform: translateY(-6px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .omega-orb {
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.85),
+        0 8px 24px rgba(0,0,0,.10),
+        inset 0 1px 0 rgba(255,255,255,.75);
+    }
+
+    .omega-product-scroll {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .omega-product-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .omega-product-card {
+      width: 138px;
+      min-width: 138px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .omega-product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.08);
+    }
+
+    .omega-product-image {
+      aspect-ratio: 1 / 1;
+      background: rgba(0,0,0,.035);
+    }
+
+    .omega-tool-card {
+      animation: chatIn .28s ease both;
+    }
+
+    .omega-action {
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .omega-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+    }
+
+    /* Instagram-style storefront feed.
+       Scoped to the product catalogue only. */
+    .instagram-product-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .instagram-product-card {
+      width: min(100%, 430px);
+      overflow: hidden;
+      border-radius: 1.25rem;
+      background: #f7f7f8;
+      color: #111;
+      border-color: rgba(0,0,0,.08) !important;
+    }
+
+    .instagram-product-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: .7rem .75rem;
+    }
+
+    .instagram-product-avatar {
+      display: flex;
+      height: 34px;
+      width: 34px;
+      flex: 0 0 34px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #f0f0ee;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .instagram-product-avatar img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .instagram-product-media {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #eceef2;
+    }
+
+    body[data-theme="dark"] .instagram-product-card {
+      background: #1f2228;
+      color: #f4f5f7;
+      border-color: rgba(255,255,255,.12) !important;
+    }
+
+    body[data-theme="dark"] .instagram-product-media {
+      background: #2a2e36;
+    }
+
+    body[data-theme="dark"] .instagram-product-card .text-black\/45,
+    body[data-theme="dark"] .instagram-product-card .text-black\/50 {
+      color: rgba(244,245,247,.72) !important;
+    }
+
+    body[data-theme="dark"] .instagram-product-card .text-black\/55,
+    body[data-theme="dark"] .instagram-product-card .text-black\/60,
+    body[data-theme="dark"] .instagram-product-card .text-black\/70 {
+      color: rgba(244,245,247,.86) !important;
+    }
+
+    #dialogMediaGallery {
+      background: #eceef2;
+      cursor: grab;
+    }
+
+    #dialogMediaGallery:active {
+      cursor: grabbing;
+    }
+
+    body[data-theme="dark"] #dialogMediaGallery {
+      background: #2a2e36;
+    }
+
+    /* Color swatch selection indicator: a white/dark double ring guarantees a
+       visible outline no matter what color the swatch itself is, and the
+       checkmark uses mix-blend-mode so it inverts against the swatch color. */
+    .swatch-selected {
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #111;
+    }
+
+    body[data-theme="dark"] .swatch-selected {
+      box-shadow: 0 0 0 2px #0b0b0f, 0 0 0 4px #fff;
+    }
+
+    .swatch-check {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 11px;
+      height: 6px;
+      margin-top: -5px;
+      margin-left: -6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg);
+      mix-blend-mode: difference;
+      pointer-events: none;
+    }
+
+    /* Diagonal strike-through overlay for color swatches that are not
+       available for the current attribute selection (e.g. a color that
+       only exists on a size other than the one currently selected).
+       mix-blend-mode keeps the line visible against any swatch color. */
+    .swatch-unavailable {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 140%;
+      height: 2px;
+      margin-top: -1px;
+      margin-left: -70%;
+      background: #fff;
+      transform: rotate(-45deg);
+      mix-blend-mode: difference;
+      pointer-events: none;
+    }
+
+    body[data-theme="dark"] .omega-product-image {
+      background: #262a31;
+    }
+
+    .instagram-product-meta {
+      padding: .25rem .85rem 1rem;
+    }
+
+    .instagram-product-description {
+      margin-top: .35rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 640px) {
+      .instagram-product-grid {
+        gap: 1.75rem;
+      }
+
+      .storefront-icon-button .theme-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .instagram-product-card {
+        width: 100%;
+        border-radius: 1rem;
+      }
+
+      .instagram-product-media {
+        aspect-ratio: 1 / 1;
+      }
+
+      .instagram-product-header {
+        padding: .6rem .65rem;
+      }
+
+      .instagram-product-meta {
+        padding-left: .75rem;
+        padding-right: .75rem;
+      }
+    }
+
+    /* Flat, sharp-cornered design language: force every corner to 0,
+       overriding all Tailwind rounded-* utilities (including arbitrary
+       values like rounded-[2rem]) and the raw border-radius rules above,
+       across buttons, inputs, dialogs, pills, cards, and badges. */
+    *,
+    *::before,
+    *::after {
+      border-radius: 0 !important;
+    }
+  </style>
+
+  <meta name="description" th:content="${selectedProduct != null ? selectedProduct.description : store.storeResponseDto.description}" content="Storefront" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" th:content="${selectedProduct != null ? selectedProduct.name : store.storeResponseDto.name}" />
+  <meta property="og:description" th:content="${selectedProduct != null ? selectedProduct.description : store.storeResponseDto.description}" />
+  <meta property="og:image" th:content="${selectedProduct != null ? selectedProductImage : store.storeResponseDto.logoUrl}" />
+  <link rel="canonical" th:href="${selectedProduct != null} ? @{/{slug}/product/{id}(slug=${storeSlug},id=${selectedProduct.id})} : @{/{slug}(slug=${storeSlug})}" />
+</head>
+
+<body class="min-h-screen font-sans antialiased">
+
+<!-- Floating navigation -->
+<header class="fixed inset-x-0 top-0 z-40 px-4 pt-4 sm:px-6">
+  <nav class="storefront-nav mx-auto flex w-full max-w-5xl items-center justify-between rounded-full px-6 py-3">
+    <a id="navStoreName" href="#" class="px-2 text-xl font-bold tracking-tight text-black/90 focus:outline-none focus:ring-2 focus:ring-black/30 rounded-md" th:text="${store.storeResponseDto.name}">Store</a>
+
+    <div class="hidden items-center gap-8 text-sm font-medium md:flex">
+      <a href="#shop" class="storefront-nav-link transition-colors duration-200">Shop</a>
+      <a href="#about" class="storefront-nav-link transition-colors duration-200">About</a>
+      <button id="chatButton" type="button" class="storefront-nav-link transition-colors duration-200">Omega</button>
+    </div>
+
+    <div class="flex items-center gap-1 md:gap-3">
+      <button type="button" data-theme-toggle
+              class="theme-toggle-button storefront-icon-button flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-transparent p-2" aria-label="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" class="theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 12.8A7.7 7.7 0 0 1 11.2 4a8.2 8.2 0 1 0 8.8 8.8Z"></path>
+        </svg>
+      </button>
+      <a href="#" data-profile-action class="profile-pill-link hidden h-10 items-center justify-center rounded-full border border-black/10 bg-transparent px-4 text-sm font-medium md:flex" aria-label="Login">Login</a>
+      <button id="cartButton"
+              class="storefront-checkout-pill group flex h-10 items-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors duration-200 hover:bg-black/80"
+              type="button">
+        Checkout
+        <span id="cartCount" class="storefront-checkout-count flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-bold">0</span>
+      </button>
+      <button id="mobileMenuButton"
+              type="button"
+              aria-label="Open navigation"
+              aria-expanded="false"
+              class="storefront-icon-button ml-1 flex h-10 w-10 items-center justify-center rounded-full p-2 md:hidden">
+        <svg id="mobileMenuIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16"></path>
+          <path d="M4 12h16"></path>
+          <path d="M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobileMenu" class="storefront-mobile-menu mobile-menu mx-auto mt-2 hidden max-w-5xl rounded-3xl border p-3 md:hidden">
+    <div class="storefront-mobile-menu-header flex items-center justify-end gap-2 border-b px-1 pb-3 mb-2">
+      <div class="flex items-center gap-2">
+        <a href="#" data-profile-action class="profile-pill-link flex h-9 items-center justify-center rounded-full border border-black/10 bg-transparent px-3 text-sm font-medium" aria-label="Login">Login</a>
+        <button id="mobileMenuClose" type="button" aria-label="Close menu"
+                class="storefront-mobile-menu-close flex h-9 w-9 items-center justify-center rounded-full">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12"></path>
+            <path d="M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <a href="#shop" class="mobile-nav-link storefront-mobile-link flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition">
+      <span>Shop</span><span class="storefront-mobile-accent">&gt;</span>
+    </a>
+    <a href="#about" class="mobile-nav-link storefront-mobile-link flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition">
+      <span>About</span><span class="storefront-mobile-accent">&gt;</span>
+    </a>
+    <button id="mobileChatButton" type="button"
+            class="storefront-mobile-link flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm transition">
+      <span>Omega</span>
+      <span class="storefront-mobile-accent">&gt;</span>
+    </button>
+  </div>
+</header>
+
+  <main>
+    <p data-auth-status role="status" aria-live="polite"
+       class="absolute left-5 top-24 text-xs text-black/60"></p>
+    <!-- Hero -->
+    <section class="mx-auto max-w-6xl px-5 pb-12 pt-32 sm:px-6 sm:pt-40 lg:pb-20">
+      <div class="grid items-end gap-10 lg:grid-cols-[1.3fr_.7fr]">
+        <div class="fade-in">
+          <div id="categoryPill"
+               class="mb-5 inline-flex rounded-full border border-black/10 bg-white/60 px-3 py-1.5 text-xs font-medium text-black/60 backdrop-blur">
+            Store
+          </div>
+
+          <h1 id="storeName"
+              class="max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-7xl lg:text-8xl"
+              th:text="${store.storeResponseDto.name}">
+            Store
+          </h1>
+
+          <p id="storeDescription"
+             class="mt-6 max-w-2xl text-base leading-7 text-black/55 sm:text-lg"
+             th:text="${store.storeResponseDto.description}">
+            Store description
+          </p>
+        </div>
+
+        <div class="flex justify-start lg:justify-end">
+          <div class="glass flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl sm:h-28 sm:w-28">
+            <img id="storeLogo" th:if="${store.storeResponseDto.logoUrl != null}" th:src="${store.storeResponseDto.logoUrl}" th:alt="${store.storeResponseDto.logoAltText != null ? store.storeResponseDto.logoAltText : store.storeResponseDto.name + ' logo'}" src="" alt="" class="h-full w-full object-cover" />
+            <span id="logoFallback" th:unless="${store.storeResponseDto.logoUrl != null}" th:text="${#strings.substring(store.storeResponseDto.name, 0, 1).toUpperCase()}" class="text-2xl font-semibold tracking-tight">S</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category navigation -->
+    <section id="shop" class="sticky top-[76px] z-30 border-y border-black/5 bg-[#f7f7f5]/80 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-5 py-3 hide-scrollbar sm:px-6">
+        <button data-category="all"
+                class="category-button rounded-full bg-black px-4 py-2 text-xs font-medium text-white">
+          All
+        </button>
+        <div id="categoryButtons" class="flex gap-2"></div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:py-16">
+      <div class="mb-8 flex items-end justify-between">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[.18em] text-black/35">Collection</p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-tight">Shop the collection</h2>
+        </div>
+        <span id="productCount" class="text-sm text-black/40"></span>
+      </div>
+
+      <div id="loadingState" class="flex flex-col items-center gap-8">
+        <div class="w-full max-w-[430px] aspect-square animate-pulse rounded-3xl bg-black/5"></div>
+        <div class="w-full max-w-[430px] aspect-square animate-pulse rounded-3xl bg-black/5"></div>
+        <div class="w-full max-w-[430px] aspect-square animate-pulse rounded-3xl bg-black/5"></div>
+      </div>
+
+      <div id="productGrid" class="hidden instagram-product-grid"></div>
+
+      <div id="emptyState" class="hidden rounded-3xl border border-black/5 bg-white/50 px-6 py-20 text-center">
+        <p class="text-lg font-medium">No products in this category.</p>
+        <p class="mt-2 text-sm text-black/45">Try another category.</p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="mx-auto max-w-6xl px-5 pb-28 sm:px-6">
+      <div class="glass rounded-[2rem] p-7 sm:p-10 lg:p-14">
+        <div class="grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[.18em] text-black/35">About</p>
+            <h2 id="aboutName" class="mt-3 text-3xl font-semibold tracking-tight">Store</h2>
+          </div>
+          <div>
+            <p id="aboutDescription" class="text-lg leading-8 text-black/55"></p>
+            <div id="storeLocations" class="mt-8"></div>
+            <div id="socialLinks" class="mt-7 flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Omega AI chat -->
+  <dialog id="chatDialog" class="w-[min(920px,calc(100%-1rem))] rounded-[2rem] border-0 bg-transparent p-0 shadow-2xl">
+    <div class="chat-shell overflow-hidden rounded-[2rem]">
+      <div class="flex items-center justify-between border-b border-black/5 px-5 py-4 sm:px-6">
+        <div class="flex items-center gap-3">
+          <div class="omega-orb flex h-10 w-10 items-center justify-center rounded-full bg-white/75 text-sm font-semibold">Ω</div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[.16em] text-black/35">Vektrlabs AI</p>
+            <h2 class="text-base font-semibold tracking-tight">Omega</h2>
+          </div>
+        </div>
+        <button id="closeChat" type="button" class="rounded-full bg-black/5 px-3 py-1.5 text-xs">Close</button>
+      </div>
+
+      <div id="chatMessages" class="chat-scroll max-h-[62vh] space-y-4 overflow-y-auto px-5 py-5 sm:px-6">
+        <div class="chat-message max-w-[82%] rounded-[1.35rem] rounded-tl-md bg-white/75 px-4 py-3 text-sm leading-6 text-black/70 shadow-sm">
+          Hi. I'm Omega. I can help you find products, compare variants, check availability, and manage your cart.
+        </div>
+      </div>
+
+      <form id="chatForm" class="border-t border-black/5 p-4 sm:p-5">
+        <div class="flex items-end gap-2 rounded-[1.5rem] border border-black/10 bg-white/70 p-2 shadow-sm">
+          <textarea id="chatInput" rows="1"
+                    placeholder="Ask Omega about the collection…"
+                    class="min-h-11 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-black/30"
+                    aria-label="Message Omega"></textarea>
+          <button id="chatSendButton" type="submit"
+                  class="rounded-full bg-black px-4 py-3 text-xs font-medium text-white transition hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-40">
+            Send
+          </button>
+        </div>
+        <p class="mt-2 px-2 text-[11px] leading-5 text-black/30">
+          Omega uses the store's live product, price, variant, cart and checkout data.
+        </p>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Product details modal -->
+  <dialog id="productDialog" class="w-[min(920px,calc(100%-2rem))] rounded-[2rem] border-0 bg-transparent p-0 shadow-2xl">
+    <div class="product-dialog-shell overflow-hidden rounded-[2rem]">
+      <div class="grid md:grid-cols-2">
+        <div class="relative bg-black/5 aspect-square md:aspect-auto md:h-full touch-pan-y select-none">
+          <div id="dialogMediaGallery" class="h-full w-full touch-pan-y select-none overflow-hidden"></div>
+          <button id="dialogMediaPrevious"
+                  type="button"
+                  class="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/85 px-3 py-2 text-xs shadow-sm backdrop-blur">
+            ←
+          </button>
+          <button id="dialogMediaNext"
+                  type="button"
+                  class="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/85 px-3 py-2 text-xs shadow-sm backdrop-blur">
+            →
+          </button>
+          <div id="dialogMediaDots" class="absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex gap-1.5"></div>
+        </div>
+
+        <div class="flex flex-col p-6 sm:p-8">
+          <div class="ml-auto flex items-center gap-2">
+            <button id="shareProduct" type="button"
+                    class="flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 text-xs"
+                    aria-label="Share this product">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.6" y1="10.6" x2="15.4" y2="6.4"></line>
+                <line x1="8.6" y1="13.4" x2="15.4" y2="17.6"></line>
+              </svg>
+              <span id="shareProductLabel">Share</span>
+            </button>
+            <button id="closeDialog" type="button" class="rounded-full bg-black/5 px-3 py-1.5 text-xs">Close</button>
+          </div>
+
+          <div class="mt-8">
+            <p id="dialogBadge" class="text-xs font-medium uppercase tracking-[.16em] text-black/35"></p>
+            <h3 id="dialogName" class="mt-2 text-3xl font-semibold tracking-tight"></h3>
+            <p id="dialogPrice" class="mt-3 text-lg font-medium"></p>
+            <p id="dialogDescription" class="mt-5 text-sm leading-6 text-black/55"></p>
+          </div>
+
+          <div id="variantSection" class="mt-8"></div>
+
+          <div class="mt-7">
+            <label for="quantityInput"
+                   class="text-xs font-medium uppercase tracking-[.14em] text-black/35">
+              Quantity
+            </label>
+            <div class="mt-3 flex w-fit items-center rounded-full border border-black/10 bg-white/60 p-1">
+              <button id="quantityDecrease"
+                      type="button"
+                      class="flex h-10 w-10 items-center justify-center rounded-full text-lg transition hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-30">
+                −
+              </button>
+              <input id="quantityInput"
+                     type="number"
+                     min="1"
+                     value="1"
+                     inputmode="numeric"
+                     class="w-14 bg-transparent text-center text-sm font-medium outline-none" />
+              <button id="quantityIncrease"
+                      type="button"
+                      class="flex h-10 w-10 items-center justify-center rounded-full text-lg transition hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-30">
+                +
+              </button>
+            </div>
+            <p id="quantityStockHint" class="mt-2 text-xs text-black/35"></p>
+          </div>
+
+          <button id="addToCartButton"
+                  type="button"
+                  class="mt-8 rounded-full bg-black px-5 py-3.5 text-sm font-medium text-white transition hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-40">
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Cart drawer -->
+  <aside id="cartDrawer"
+         class="fixed inset-y-0 right-0 z-50 flex w-full max-w-md translate-x-full flex-col bg-white shadow-2xl transition-transform duration-300">
+    <div class="flex items-center justify-between border-b border-black/5 px-5 py-5">
+      <div>
+        <p class="text-xs uppercase tracking-[.16em] text-black/35">Shopping bag</p>
+        <h2 class="mt-1 text-lg font-semibold">Your cart</h2>
+      </div>
+      <button id="closeCart" type="button" class="rounded-full bg-black/5 px-3 py-1.5 text-xs">Close</button>
+    </div>
+
+    <div id="cartItems" class="flex-1 overflow-y-auto p-5"></div>
+
+    <div class="border-t border-black/5 p-5">
+      <div class="flex justify-between text-sm">
+        <span class="text-black/45">Subtotal</span>
+        <span id="cartTotal" class="font-semibold">€0.00</span>
+      </div>
+      <button type="button"
+              id="checkoutButton"
+              class="mt-4 w-full rounded-full bg-black px-5 py-3.5 text-sm font-medium text-white">
+        Checkout
+      </button>
+      <p class="mt-3 text-center text-xs leading-5 text-black/35">
+        Secure checkout powered by Stripe.
+      </p>
+    </div>
+  </aside>
+
+  <div id="drawerOverlay" class="pointer-events-none fixed inset-0 z-40 bg-black/20 opacity-0 transition-opacity"></div>
+
+  <script src="/js/session.js?v=20260915"></script>
+  <script th:inline="javascript">
+    /*
+     * API CONTRACT
+     * ------------
+     * The StoreViewResponse currently contains:
+     *   {
+     *     storeResponseDto: {...},
+     *     productResponseDtos: [...]
+     *   }
+     *
+     * This page accepts that response directly.
+     *
+     * Change STORE_API_BASE if your Spring endpoint differs.
+     *
+     * Example:
+     *   /fekete
+     *   -> GET /api/v1/stores/vektrlabs
+     */
+    // Storefront API configuration. Keep backend route changes in one place.
+    const API_BASE = '/api/v1/stores';
+    const AI_CHAT_API = '/api/v1/ai/chat';
+    const CART_API = '/api/v1/shopping/cart';
+    const ORDER_API = '/api/v1/order';
+
+    // Browser storage keys used to preserve client-side checkout state.
+    const STORAGE_KEYS = {
+      CART_ID: 'vektrlabs-cart-id',
+      PENDING_ORDER: 'vektrlabs-pending-order'
+    };
+
+    const themeToggleButton = document.querySelector('[data-theme-toggle]');
+    if (themeToggleButton) {
+      themeToggleButton.setAttribute('aria-label', 'Toggle theme');
+    }
+
+    // Tool response types returned by the Omega API.
+    const TOOL_TYPES = {
+      PRODUCTS: 'PRODUCTS',
+      PRODUCT: 'PRODUCT',
+      CART: 'CART',
+      CART_UPDATED: 'CART_UPDATED',
+      CHECKOUT: 'CHECKOUT',
+      ORDER: 'ORDER',
+      ORDER_STATUS: 'ORDER_STATUS'
+    };
+
+    // Order states that represent a completed payment flow.
+    const TERMINAL_ORDER_STATUSES = ['PAID', 'FAILED', 'CANCELLED'];
+
+    // Payment-return polling configuration.
+    const PAYMENT_RETURN_MAX_ATTEMPTS = 10;
+    const PAYMENT_RETURN_POLLING_INTERVAL_MS = 1000;
+
+    // Optional fallback for local UI development without the backend.
+    const USE_MOCK_DATA = false;
+
+    // Runtime state shared by the storefront, cart and Omega UI.
+    const state = {
+      store: null,
+      products: [],
+      categories: [],
+      locations: [],
+      activeCategory: 'all',
+      selectedLocation: null,
+      selectedProduct: null,
+      selectedVariant: null,
+      selectedAttributes: {},
+      selectedMediaIndex: 0,
+      chatOpen: false,
+      chatSending: false,
+      page: 1,
+      totalPages: 1,
+      pageSize: 12,
+      loadingMore: false,
+      // Only the server-issued cart ID is persisted locally.
+      // Cart contents, quantities and totals are always loaded from the server.
+      cartId: localStorage.getItem(STORAGE_KEYS.CART_ID),
+      cart: null,
+      storeSlug: ''
+    };
+
+    // DOM helper for concise element selection.
+    const $ = (selector) => document.querySelector(selector);
+    const apiFetch = SessionAuth.request;
+
+    SessionAuth.bindAccountControls();
+    window.addEventListener('profile-state-changed', event => {
+      if (['anonymous', 'incomplete', 'error'].includes(event.detail.status)) {
+        state.cart = null;
+        if (event.detail.status === 'anonymous') {
+          state.cartId = null;
+          localStorage.removeItem(STORAGE_KEYS.CART_ID);
+          sessionStorage.removeItem(STORAGE_KEYS.PENDING_ORDER);
+        }
+        renderCart();
+        closeCart();
+      }
+    });
+
+    // ---------------------------------------------------------------------------
+    // Formatting and sanitization helpers.
+    // ---------------------------------------------------------------------------
+    const CURRENCY_LOCALE = {
+      USD: 'en-US',
+      EUR: 'de-DE',
+      GBP: 'en-GB',
+      CAD: 'en-CA',
+      AUD: 'en-AU',
+      ZAR: 'en-ZA',
+      NGN: 'en-NG',
+      KES: 'en-KE',
+      GHS: 'en-GH'
+    };
+    function money(value) {
+      const currency = state.store?.currency || 'USD';
+      return new Intl.NumberFormat(CURRENCY_LOCALE[currency] || 'en-US', {
+        style: 'currency',
+        currency
+      }).format(Number(value || 0));
+    }
+
+    // Escapes user/API values before injecting into HTML templates.
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    // Returns product media sorted by primary-first and then explicit sort order.
+    function getProductMedia(product) {
+      const media = [...(product.productMediaResources || [])];
+
+      media.sort((a, b) => {
+        if (Boolean(a.primaryImage) !== Boolean(b.primaryImage)) {
+          return Number(Boolean(b.primaryImage)) - Number(Boolean(a.primaryImage));
+        }
+        return Number(a.sortOrder || 0) - Number(b.sortOrder || 0);
+      });
+
+      return media;
+    }
+
+    // Returns the first display image URL for cards and previews.
+    function getPrimaryMedia(product) {
+      return getProductMedia(product)[0]?.preSignedUrl || '';
+    }
+
+    // ---------------------------------------------------------------------------
+    // Store metadata, categories, socials and location rendering.
+    // ---------------------------------------------------------------------------
+    function updateCategoryPill() {
+      if (state.activeCategory === 'all') {
+        $('#categoryPill').textContent = 'Collection';
+        return;
+      }
+
+      const categoryResource = state.categories.find(
+        categoryResource =>
+          categoryResource.categoryResponseDto.id === state.activeCategory
+      );
+
+      $('#categoryPill').textContent =
+        categoryResource?.categoryResponseDto?.name || 'Collection';
+    }
+
+    // Builds category filter buttons and binds click handlers.
+    function renderCategories() {
+      const categories = state.categories || [];
+      updateCategoryPill();
+
+      $('#categoryButtons').innerHTML = categories.map(categoryResource => {
+        const category = categoryResource.categoryResponseDto;
+
+        return `
+          <button data-category="${escapeHtml(category.id)}"
+                  class="category-button rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-medium text-black/55 transition hover:bg-white">
+            ${escapeHtml(category.name)}
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.category-button').forEach(button => {
+        button.addEventListener('click', () => {
+          state.activeCategory = button.dataset.category;
+          updateCategoryButtons();
+          updateCategoryPill();
+          renderProducts();
+        });
+      });
+    }
+
+    // Hydrates static hero/about/nav text from current store payload.
+    function renderStore() {
+      const store = state.store;
+
+      document.title = store.name;
+      $('#navStoreName').textContent = store.name;
+      $('#storeName').textContent = store.name;
+      $('#aboutName').textContent = store.name;
+      $('#storeDescription').textContent = store.description || '';
+      $('#aboutDescription').textContent = store.description || '';
+
+      const logo = $('#storeLogo');
+      const fallback = $('#logoFallback');
+
+      if (store.logoUrl && logo) {
+        logo.src = store.logoUrl;
+        logo.alt = store.logoAltText || `${store.name} logo`;
+        logo.classList.remove('hidden');
+        if (fallback) fallback.classList.add('hidden');
+      } else {
+        if (logo) logo.classList.add('hidden');
+        if (fallback) {
+          fallback.classList.remove('hidden');
+          fallback.textContent = store.name?.charAt(0)?.toUpperCase() || 'S';
+        }
+      }
+
+      renderCategories();
+      renderSocials(store);
+    }
+
+    // Renders available social links only (skips missing URLs).
+    function renderSocials(store) {
+      const links = [
+        ['Instagram', store.instagramUrl],
+        ['Facebook', store.facebookUrl],
+        ['TikTok', store.tiktokUrl],
+        ['YouTube', store.youtubeUrl],
+        ['LinkedIn', store.linkedinUrl],
+        ['X', store.xUrl]
+      ].filter(([, url]) => url);
+
+      $('#socialLinks').innerHTML = links.map(([name, url]) => `
+        <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"
+           class="rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-medium transition hover:bg-white">
+          ${escapeHtml(name)}
+        </a>
+      `).join('');
+    }
+
+    // Builds location selector + map shell and chooses initial location.
+    function renderLocations() {
+      const locations = (state.locations || []).filter(location => location.visible);
+      const container = $('#storeLocations');
+
+      if (!locations.length) {
+        container.innerHTML = '';
+        state.selectedLocation = null;
+        return;
+      }
+
+      state.selectedLocation =
+        locations.find(location => location.primary) || locations[0];
+
+      container.innerHTML = `
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[.18em] text-black/35">
+            Locations
+          </p>
+          <select
+            id="locationSelector"
+            class="mt-3 w-full rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm outline-none transition focus:border-black/30">
+            ${locations.map(location => `
+              <option value="${escapeHtml(location.id)}">
+                ${escapeHtml(location.name)}
+              </option>
+            `).join('')}
+          </select>
+        </div>
+        <div id="locationDetails" class="mt-4"></div>
+        <div class="mt-5 overflow-hidden rounded-2xl border border-black/10">
+          <iframe
+            id="locationMap"
+            class="h-72 w-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      `;
+
+      $('#locationSelector').value = state.selectedLocation.id;
+
+      $('#locationSelector').addEventListener('change', event => {
+        const location = locations.find(item => item.id === event.target.value);
+
+        if (!location) {
+          return;
+        }
+
+        state.selectedLocation = location;
+        renderSelectedLocation();
+      });
+
+      renderSelectedLocation();
+    }
+
+    // Updates selected location details and Google Maps embed.
+    function renderSelectedLocation() {
+      const location = state.selectedLocation;
+
+      if (!location) {
+        return;
+      }
+
+      $('#locationDetails').innerHTML = `
+        <p class="text-sm font-medium text-black">
+          ${escapeHtml(location.name)}
+        </p>
+        <p class="mt-1 text-sm leading-6 text-black/50">
+          ${escapeHtml(location.address)}<br>
+          ${escapeHtml(location.city || '')}, ${escapeHtml(location.country || '')}
+          ${location.postalCode ? ` · ${escapeHtml(location.postalCode)}` : ''}
+        </p>
+        ${location.phone ? `
+          <p class="mt-1 text-xs text-black/40">
+            ${escapeHtml(location.phone)}
+          </p>
+        ` : ''}
+      `;
+
+      if (location.latitude == null || location.longitude == null) {
+        $('#locationMap').removeAttribute('src');
+        return;
+      }
+
+      const query = `${location.latitude},${location.longitude}`;
+
+      $('#locationMap').src =
+        `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
+    }
+
+    // Applies active visual state to category buttons.
+    function updateCategoryButtons() {
+      document.querySelectorAll('.category-button').forEach(button => {
+        const active = button.dataset.category === state.activeCategory;
+
+        button.classList.toggle('is-active', active);
+
+        if (active) {
+          button.classList.remove(
+            'bg-white/60',
+            'text-black/55',
+            'border-black/10'
+          );
+        } else {
+          button.classList.remove(
+            'bg-black',
+            'text-white',
+            'border-black'
+          );
+          button.classList.add(
+            'bg-white/60',
+            'text-black/55',
+            'border-black/10'
+          );
+        }
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Product catalogue rendering, infinite scroll and product card interaction.
+    // ---------------------------------------------------------------------------
+    function getVisibleProducts() {
+      if (state.activeCategory === 'all') {
+        return state.products;
+      }
+
+      const categoryResource = state.categories.find(
+        categoryResource =>
+          categoryResource.categoryResponseDto.id === state.activeCategory
+      );
+
+      return categoryResource?.products || [];
+    }
+
+    // Loads next products page for "all" category endless scrolling.
+    async function loadNextPage() {
+      if (state.loadingMore || state.activeCategory !== 'all' || state.page >= state.totalPages) {
+        return;
+      }
+
+      state.loadingMore = true;
+      const nextPage = state.page + 1;
+      const storeName = encodeURIComponent(state.store?.name || '');
+
+      try {
+        const response = await fetch(`${API_BASE}/${storeName}/products?page=${nextPage}&size=${state.pageSize}`, {
+          headers: { 'Accept': 'application/json' },
+          credentials: 'same-origin'
+        });
+
+        if (!response.ok) {
+          throw new Error(`More products failed: ${response.status}`);
+        }
+
+        const json = await response.json();
+        const payload = json.data || json;
+        const nextProducts = payload.productResponseDtos || [];
+
+        state.products = [
+          ...state.products,
+          ...nextProducts.filter(product => !state.products.some(existing => existing.id === product.id))
+        ];
+        state.page = Number(payload.page || nextPage);
+        state.totalPages = Number(payload.totalPages || state.totalPages);
+        renderProducts();
+      } catch (error) {
+        console.error('Unable to load more products:', error);
+      } finally {
+        state.loadingMore = false;
+      }
+    }
+
+    // Triggers pagination when user scrolls near the page bottom.
+    function handleScrollPagination() {
+      if (state.activeCategory !== 'all') {
+        return;
+      }
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 260;
+      if (nearBottom) {
+        loadNextPage();
+      }
+    }
+
+    // Renders product feed cards and binds click to open product dialog.
+    function renderProducts() {
+      const products = getVisibleProducts();
+      $('#productCount').textContent = `${products.length} ${products.length === 1 ? 'product' : 'products'}`;
+      $('#loadingState').classList.add('hidden');
+      $('#productGrid').classList.remove('hidden');
+
+      if (!products.length) {
+        $('#productGrid').innerHTML = '';
+        $('#emptyState').classList.remove('hidden');
+        return;
+      }
+
+      $('#emptyState').classList.add('hidden');
+
+      $('#productGrid').innerHTML = products.map((product, index) => {
+        const image = getPrimaryMedia(product);
+        const variants = product.variants || [];
+        const available = variants.length
+          ? variants.some(v => Number(v.stockQuantity || 0) > 0)
+          : Boolean(product.active);
+
+        return `
+          <article class="product-card instagram-product-card fade-in group cursor-pointer border border-black/5"
+                   style="animation-delay:${index * 45}ms"
+                   data-product-id="${escapeHtml(product.id)}">
+            <div class="instagram-product-header">
+              <div class="flex min-w-0 items-center gap-2.5">
+                <div class="instagram-product-avatar">
+                  ${state.store?.logoUrl
+                    ? `<img src="${escapeHtml(state.store.logoUrl)}" alt="" />`
+                    : `<span class="text-[11px] font-semibold">${escapeHtml(state.store?.name?.charAt(0)?.toUpperCase() || 'S')}</span>`
+                  }
+                </div>
+                <div class="min-w-0">
+                  <p class="truncate text-xs font-semibold">${escapeHtml(product.name)}</p>
+                  <p class="truncate text-[11px] text-black/45">${escapeHtml(state.store?.name || 'Store')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="instagram-product-media relative">
+              ${image
+                ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(product.name)}" loading="lazy" class="product-image h-full w-full object-cover" />`
+                : `<div class="flex h-full items-center justify-center text-sm text-black/25">No image</div>`
+              }
+              ${product.active === false
+                ? `<span class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider shadow-sm">Unavailable</span>`
+                : ''
+              }
+              ${available ? '' : `<span class="absolute bottom-3 left-3 rounded-full bg-black/75 px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white">Sold out</span>`}
+            </div>
+
+            <div class="instagram-product-meta">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="min-w-0 text-sm font-semibold leading-5 sm:text-base">${escapeHtml(product.name)}</h3>
+                <span class="shrink-0 text-sm font-semibold">${money(product.price)}</span>
+              </div>
+              <p class="instagram-product-description line-clamp-3 text-xs text-black/50 sm:text-sm">
+                ${escapeHtml(product.description || '')}
+              </p>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-product-id]').forEach(card => {
+        card.addEventListener('click', () => {
+          const product = state.products.find(
+            p => p.id === card.dataset.productId
+          );
+          openProduct(product);
+        });
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Product dialog media, variant resolution and quantity management.
+    // ---------------------------------------------------------------------------
+    function renderProductMediaGallery() {
+      const product = state.selectedProduct;
+      const media = getProductMedia(product);
+      const gallery = $('#dialogMediaGallery');
+      const previous = $('#dialogMediaPrevious');
+      const next = $('#dialogMediaNext');
+      const dots = $('#dialogMediaDots');
+
+      bindProductMediaSwipe(gallery);
+
+      if (!media.length) {
+        gallery.innerHTML = `
+          <div class="flex h-full items-center justify-center text-sm text-black/25">
+            No image
+          </div>
+        `;
+        previous.classList.add('hidden');
+        next.classList.add('hidden');
+        dots.classList.add('hidden');
+        dots.innerHTML = '';
+        return;
+      }
+
+      state.selectedMediaIndex = Math.min(
+        Math.max(state.selectedMediaIndex, 0),
+        media.length - 1
+      );
+
+      const selectedMedia = media[state.selectedMediaIndex];
+
+      gallery.innerHTML = `
+        <img src="${escapeHtml(selectedMedia.preSignedUrl)}"
+             alt="${escapeHtml(product.name)}"
+             draggable="false"
+             class="h-full w-full object-cover pointer-events-none" />
+      `;
+
+      const hasMultiple = media.length > 1;
+      previous.classList.toggle('hidden', !hasMultiple);
+      next.classList.toggle('hidden', !hasMultiple);
+      dots.classList.toggle('hidden', !hasMultiple);
+
+      dots.innerHTML = hasMultiple
+        ? media.map((_, index) => `
+            <button type="button"
+                    data-media-index="${index}"
+                    aria-label="Show image ${index + 1}"
+                    class="h-1.5 rounded-full transition-all ${
+                      index === state.selectedMediaIndex
+                        ? 'w-5 bg-white shadow'
+                        : 'w-1.5 bg-white/60 hover:bg-white/80'
+                    }"></button>
+          `).join('')
+        : '';
+
+      dots.querySelectorAll('[data-media-index]').forEach(dot => {
+        dot.addEventListener('click', () => {
+          state.selectedMediaIndex = Number(dot.dataset.mediaIndex);
+          renderProductMediaGallery();
+        });
+      });
+    }
+
+    // Changes selected media index and refreshes gallery.
+    function moveProductMedia(direction) {
+      const media = getProductMedia(state.selectedProduct);
+
+      if (media.length < 2) {
+        return;
+      }
+
+      state.selectedMediaIndex =
+        (state.selectedMediaIndex + direction + media.length) % media.length;
+
+      renderProductMediaGallery();
+    }
+
+    // Binds touch/pointer swipe gestures to the media gallery once. Since the
+    // gallery container node persists across re-renders (only its innerHTML
+    // changes), the listeners stay valid without needing to be re-attached.
+    function bindProductMediaSwipe(gallery) {
+      if (!gallery || gallery.dataset.swipeBound === 'true') {
+        return;
+      }
+      gallery.dataset.swipeBound = 'true';
+
+      const SWIPE_THRESHOLD = 40;
+      let startX = 0;
+      let startY = 0;
+      let tracking = false;
+
+      const onPointerDown = event => {
+        tracking = true;
+        startX = event.clientX;
+        startY = event.clientY;
+      };
+
+      const onPointerUp = event => {
+        if (!tracking) return;
+        tracking = false;
+        const deltaX = event.clientX - startX;
+        const deltaY = event.clientY - startY;
+        if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
+          moveProductMedia(deltaX < 0 ? 1 : -1);
+        }
+      };
+
+      gallery.addEventListener('pointerdown', onPointerDown);
+      gallery.addEventListener('pointerup', onPointerUp);
+      gallery.addEventListener('pointercancel', () => { tracking = false; });
+    }
+
+    // Normalizes product attributes collection.
+    function getProductAttributes(product) {
+      return Array.isArray(product?.attributes) ? product.attributes : [];
+    }
+
+    // Normalizes an attribute name/value token for defensive comparisons
+    // (trims whitespace, case-folds). This guards cross-attribute matching
+    // against schema drift between variants/products/stores (e.g. a variant
+    // whose colour key/value happens to be cased or spaced differently)
+    // without changing what's actually displayed to shoppers.
+    function normalizeAttributeToken(token) {
+      return String(token ?? '').trim().toLowerCase();
+    }
+
+    // Reads a single attribute value from a variant attribute map, matching
+    // the attribute name case/whitespace-insensitively so differently-cased
+    // keys across variants/schemas still resolve to the same attribute.
+    function getVariantAttributeValue(variant, name) {
+      const attributes = variant?.attributes;
+      if (!attributes) {
+        return undefined;
+      }
+      if (Object.prototype.hasOwnProperty.call(attributes, name)) {
+        return attributes[name];
+      }
+      const targetKey = normalizeAttributeToken(name);
+      const matchedKey = Object.keys(attributes).find(
+        key => normalizeAttributeToken(key) === targetKey
+      );
+      return matchedKey ? attributes[matchedKey] : undefined;
+    }
+
+    // Checks whether a variant matches selected attribute values.
+    function variantMatchesSelection(variant, selection, ignoredAttribute = null) {
+      return Object.entries(selection).every(([name, value]) => {
+        if (name === ignoredAttribute || value == null || value === '') {
+          return true;
+        }
+        return normalizeAttributeToken(getVariantAttributeValue(variant, name)) ===
+          normalizeAttributeToken(value);
+      });
+    }
+
+    // Picks best variant for current selection (in-stock first).
+    function findMatchingVariant(product, selection) {
+      const variants = product?.variants || [];
+      return variants.find(variant =>
+        Number(variant.stockQuantity || 0) > 0 &&
+        variantMatchesSelection(variant, selection)
+      ) || variants.find(variant => variantMatchesSelection(variant, selection)) || null;
+    }
+
+    // Builds initial selected attributes from variant/default metadata.
+    function buildInitialAttributeSelection(product, variant) {
+      const selection = {};
+      getProductAttributes(product).forEach(attribute => {
+        const value = getVariantAttributeValue(variant, attribute.name);
+        if (value != null && value !== '') {
+          selection[attribute.name] = value;
+        } else if (attribute.selectedValue != null && attribute.selectedValue !== '') {
+          selection[attribute.name] = attribute.selectedValue;
+        } else if (Array.isArray(attribute.values) && attribute.values.length === 1) {
+          selection[attribute.name] = attribute.values[0];
+        }
+      });
+      return selection;
+    }
+
+    // Recomputes selected variant after user changes option controls.
+    // `changedAttribute` is the name of the attribute the user just picked
+    // (if any). When the full current selection has no matching variant —
+    // e.g. a non-rectangular variant matrix where the newly picked value
+    // never pairs with the other attributes' current values — we relax
+    // every attribute except the one just changed so the user is never
+    // stuck unable to reach a variant that genuinely exists.
+    function updateSelectedVariantFromAttributes(changedAttribute = null) {
+      const product = state.selectedProduct;
+      const attributes = getProductAttributes(product);
+      if (!attributes.length) {
+        return;
+      }
+
+      const selection = state.selectedAttributes || {};
+      let matchingVariant = findMatchingVariant(product, selection);
+      if (!matchingVariant && changedAttribute != null && selection[changedAttribute] != null) {
+        matchingVariant = findMatchingVariant(product, { [changedAttribute]: selection[changedAttribute] });
+      }
+      if (matchingVariant) {
+        state.selectedVariant = matchingVariant;
+        state.selectedAttributes = buildInitialAttributeSelection(product, matchingVariant);
+      }
+    }
+
+    // Renders one attribute control (static text, color swatches, or select).
+    function renderAttributeControl(attribute, selection, variants) {
+      const name = attribute.name;
+      const values = Array.isArray(attribute.values) ? [...new Set(attribute.values)] : [];
+      const selectedValue = selection[name] ?? attribute.selectedValue ?? (values.length === 1 ? values[0] : '');
+      const selectable = attribute.selectable !== false && values.length > 1;
+      const type = String(attribute.type || '').toUpperCase();
+
+      const isAvailable = value => variants.some(variant =>
+        Number(variant.stockQuantity || 0) > 0 &&
+        variantMatchesSelection(variant, selection, name) &&
+        normalizeAttributeToken(getVariantAttributeValue(variant, name)) === normalizeAttributeToken(value)
+      );
+
+      const label = name
+        .replaceAll('_', ' ')
+        .replace(/\b\w/g, character => character.toUpperCase());
+
+      if (!values.length) {
+        return '';
+      }
+
+      if (!selectable && type !== 'COLOUR' && type !== 'COLOR') {
+        return `
+          <div class="mt-5">
+            <p class="text-xs font-medium uppercase tracking-[.14em] text-black/35">${escapeHtml(label)}</p>
+            <div class="mt-3 rounded-2xl border border-black/10 bg-black/[.025] px-4 py-3 text-sm text-black/65">
+              ${escapeHtml(selectedValue || values[0])}
+            </div>
+          </div>
+        `;
+      }
+
+      if (type === 'COLOUR' || type === 'COLOR') {
+        return `
+          <div class="mt-5">
+            <p class="text-xs font-medium uppercase tracking-[.14em] text-black/35">${escapeHtml(label)}</p>
+            <div class="mt-3 flex flex-wrap gap-3">
+              ${values.map(value => {
+                const available = isAvailable(value);
+                const selected = normalizeAttributeToken(value) === normalizeAttributeToken(selectedValue);
+                const safeValue = escapeHtml(value);
+                // Values unavailable for the current sibling-attribute selection stay
+                // clickable (not `disabled`) so picking one can relax/adjust the other
+                // attributes to a variant that actually exists, instead of trapping the
+                // user in a dead end on non-rectangular variant matrices.
+                return `
+                  <button type="button"
+                          data-attribute-name="${escapeHtml(name)}"
+                          data-attribute-value="${safeValue}"
+                          aria-label="${safeValue}${available ? '' : ' (currently paired with a different selection)'}"
+                          aria-pressed="${selected}"
+                          title="${safeValue}${available ? '' : ' — pick this to switch the matching selection'}"
+                          class="relative h-10 w-10 rounded-full border border-black/10 transition cursor-pointer ${selected ? 'swatch-selected scale-105' : ''} ${available ? '' : 'opacity-30'}"
+                          style="background:${safeValue}">
+                    ${selected ? '<span class="swatch-check" aria-hidden="true"></span>' : ''}
+                    ${available ? '' : '<span class="swatch-unavailable" aria-hidden="true"></span>'}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="mt-5">
+          <label for="attribute-${escapeHtml(name)}" class="text-xs font-medium uppercase tracking-[.14em] text-black/35">
+            ${escapeHtml(label)}
+          </label>
+          <div class="relative mt-3">
+            <select id="attribute-${escapeHtml(name)}"
+                    data-attribute-name="${escapeHtml(name)}"
+                    class="w-full appearance-none rounded-2xl border border-black/10 bg-white/70 px-4 py-3 pr-10 text-sm outline-none transition focus:border-black/30">
+              ${values.map(value => {
+                const available = isAvailable(value);
+                const selected = normalizeAttributeToken(value) === normalizeAttributeToken(selectedValue);
+                return `
+                  <option value="${escapeHtml(value)}"
+                          ${selected ? 'selected' : ''}>
+                    ${escapeHtml(value)}${available ? '' : ' — Unavailable with current selection'}
+                  </option>
+                `;
+              }).join('')}
+            </select>
+            <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      `;
+    }
+
+    // Builds the canonical shareable URL for a product.
+    function buildProductUrl(product) {
+      const slug = state.storeSlug || SERVER_STORE.storeSlug || '';
+      return `${window.location.origin}/${encodeURIComponent(slug)}/product/${encodeURIComponent(product.id)}`;
+    }
+
+    // Shares the currently open product's canonical URL via the native share
+    // sheet where available, falling back to copying it to the clipboard.
+    async function shareSelectedProduct() {
+      const product = state.selectedProduct;
+      if (!product) return;
+
+      const url = buildProductUrl(product);
+      const label = $('#shareProductLabel');
+
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: product.name, url });
+          return;
+        } catch (error) {
+          if (error?.name === 'AbortError') return;
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        const previous = label.textContent;
+        label.textContent = 'Copied!';
+        setTimeout(() => { label.textContent = previous; }, 1600);
+      } catch (error) {
+        console.error('Unable to copy product link:', error);
+      }
+    }
+
+    // Opens the product dialog and initializes media/options/quantity.
+    // Also syncs the browser URL to the canonical product page (Instagram-
+    // style modal-over-feed) unless explicitly disabled, e.g. when the
+    // dialog is pre-opened from a server-rendered deep link.
+    function openProduct(product, { updateUrl = true } = {}) {
+      state.selectedProduct = product;
+      state.selectedVariant = product.variants?.find(variant =>
+        Number(variant.stockQuantity || 0) > 0
+      ) || product.variants?.[0] || null;
+      state.selectedAttributes = buildInitialAttributeSelection(product, state.selectedVariant);
+      state.selectedQuantity = 1;
+      state.selectedMediaIndex = 0;
+
+      updateSelectedVariantFromAttributes();
+
+      $('#dialogName').textContent = product.name;
+      $('#dialogPrice').textContent = money(product.price);
+      $('#dialogDescription').textContent = product.description || '';
+      $('#dialogBadge').textContent = product.active === false ? 'Unavailable' : 'Product';
+
+      if (updateUrl) {
+        window.history.pushState({ productId: product.id }, '', buildProductUrl(product));
+      }
+
+      renderProductMediaGallery();
+      $('#quantityInput').value = 1;
+      renderVariants();
+      updateQuantityControls();
+      $('#productDialog').showModal();
+    }
+
+    // Renders variant controls and binds events for dynamic variant matching.
+    function renderVariants() {
+      const product = state.selectedProduct;
+      const variants = product?.variants || [];
+      const attributes = getProductAttributes(product);
+      const variantSection = $('#variantSection');
+
+      if (!variants.length) {
+        variantSection.innerHTML = `
+          <p class="text-sm text-black/45">
+            No variants are currently available for this product.
+          </p>
+        `;
+        state.selectedVariant = null;
+        updateQuantityControls();
+        return;
+      }
+
+      if (!attributes.length) {
+        variantSection.innerHTML = `
+          <p class="text-xs font-medium uppercase tracking-[.14em] text-black/35">Variant</p>
+          <div class="mt-3 rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm text-black/65">
+            ${escapeHtml(Object.entries(state.selectedVariant?.attributes || {})
+              .filter(([key]) => key !== 'category')
+              .map(([key, value]) => `${key}: ${value}`)
+              .join(' · ') || 'Standard')}
+          </div>
+        `;
+        updateQuantityControls();
+        return;
+      }
+
+      state.selectedAttributes = state.selectedAttributes || buildInitialAttributeSelection(product, state.selectedVariant);
+
+      variantSection.innerHTML = `
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[.14em] text-black/35">Options</p>
+          ${attributes.map(attribute =>
+            renderAttributeControl(attribute, state.selectedAttributes, variants)
+          ).join('')}
+        </div>
+      `;
+
+      variantSection.querySelectorAll('[data-attribute-name]').forEach(control => {
+        const name = control.dataset.attributeName;
+        const resolveValue = () => control.dataset.attributeValue ?? control.value;
+        const applySelection = () => {
+          state.selectedAttributes = {
+            ...(state.selectedAttributes || {}),
+            [name]: resolveValue()
+          };
+          // Pass the just-changed attribute so a selection with no exact
+          // variant match (non-rectangular variant matrix) relaxes the
+          // other attributes instead of leaving the UI stuck.
+          updateSelectedVariantFromAttributes(name);
+          state.selectedQuantity = 1;
+          $('#quantityInput').value = 1;
+          renderVariants();
+          updateQuantityControls();
+        };
+        control.addEventListener('change', applySelection);
+        control.addEventListener('click', () => {
+          if (control.tagName !== 'BUTTON') return;
+          applySelection();
+        });
+      });
+
+      updateQuantityControls();
+    }
+
+    // Keeps quantity controls synchronized with variant availability.
+    function updateQuantityControls() {
+      const product = state.selectedProduct;
+      const variant = state.selectedVariant;
+      const quantityInput = $('#quantityInput');
+      const decreaseButton = $('#quantityDecrease');
+      const increaseButton = $('#quantityIncrease');
+      const addButton = $('#addToCartButton');
+      const stockHint = $('#quantityStockHint');
+
+      if (!variant || product?.active === false) {
+        quantityInput.value = 1;
+        quantityInput.disabled = true;
+        decreaseButton.disabled = true;
+        increaseButton.disabled = true;
+        addButton.disabled = true;
+        stockHint.textContent = 'This product is unavailable.';
+        return;
+      }
+
+      const stockQuantity = Number(variant.stockQuantity || 0);
+
+      if (stockQuantity <= 0) {
+        quantityInput.value = 1;
+        quantityInput.disabled = true;
+        decreaseButton.disabled = true;
+        increaseButton.disabled = true;
+        addButton.disabled = true;
+        stockHint.textContent = 'Sold out.';
+        return;
+      }
+
+      const quantity = Math.min(
+        Math.max(Number(state.selectedQuantity || 1), 1),
+        stockQuantity
+      );
+
+      state.selectedQuantity = quantity;
+      quantityInput.value = quantity;
+      quantityInput.max = stockQuantity;
+      quantityInput.disabled = false;
+      decreaseButton.disabled = quantity <= 1;
+      increaseButton.disabled = quantity >= stockQuantity;
+      addButton.disabled = false;
+
+      stockHint.textContent = `${stockQuantity} available`;
+    }
+
+    // Clamps user-entered quantity to [1..stock].
+    function setSelectedQuantity(quantity) {
+      const variant = state.selectedVariant;
+
+      if (!variant) return;
+
+      const stockQuantity = Number(variant.stockQuantity || 0);
+      const parsedQuantity = Number(quantity);
+
+      if (!Number.isFinite(parsedQuantity)) return;
+
+      state.selectedQuantity = Math.min(
+        Math.max(Math.floor(parsedQuantity), 1),
+        stockQuantity
+      );
+
+      updateQuantityControls();
+    }
+
+    // ---------------------------------------------------------------------------
+    // Cart operations. Server state is authoritative; client keeps only cartId.
+    // ---------------------------------------------------------------------------
+    async function loadCart() {
+      if (SessionAuth.state.status !== 'complete') {
+        state.cart = null;
+        renderCart();
+        return;
+      }
+      if (!state.cartId) {
+        state.cart = null;
+        renderCart();
+        return;
+      }
+
+      try {
+        const response = await apiFetch(
+          `${CART_API}/${encodeURIComponent(state.cartId)}`,
+          {
+            headers: {
+              'Accept': 'application/json'
+            }
+          }
+        );
+
+        if (response.status === 404) {
+          state.cartId = null;
+          state.cart = null;
+          localStorage.removeItem(STORAGE_KEYS.CART_ID);
+          renderCart();
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`Cart retrieval failed: ${response.status}`);
+        }
+
+        const json = await response.json();
+        state.cart = json.data;
+        renderCart();
+      } catch (error) {
+        console.error('Unable to load server cart:', error);
+        state.cart = null;
+        renderCart();
+      }
+    }
+
+    // Creates a new cart with an initial item.
+    async function createCart(variantId, quantity) {
+      const response = await apiFetch(CART_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          item: {
+            variantId,
+            quantity
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Cart creation failed: ${response.status}`);
+      }
+
+      const json = await response.json();
+      const cart = json.data;
+
+      if (!cart?.id) {
+        throw new Error('Cart response did not contain a cart id.');
+      }
+
+      state.cartId = cart.id;
+      state.cart = cart;
+      localStorage.setItem(STORAGE_KEYS.CART_ID, cart.id);
+
+      renderCart();
+    }
+
+    // Adds item to existing cart, or recreates cart if server no longer has it.
+    async function addCartItem(variantId, quantity) {
+      if (!await SessionAuth.requireCompleteProfile()) return;
+      if (!state.cartId) {
+        await createCart(variantId, quantity);
+        return;
+      }
+
+      const response = await apiFetch(
+        `${CART_API}/${encodeURIComponent(state.cartId)}/items`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            variantId,
+            quantity
+          })
+        }
+      );
+
+      if (response.status === 404) {
+        state.cartId = null;
+        state.cart = null;
+        localStorage.removeItem(STORAGE_KEYS.CART_ID);
+        await createCart(variantId, quantity);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Adding item failed: ${response.status}`);
+      }
+
+      const json = await response.json();
+      state.cart = json.data;
+      renderCart();
+    }
+
+    // Dialog CTA handler that validates session/profile before adding.
+    async function addToCart() {
+      if (!await SessionAuth.requireCompleteProfile()) return;
+      const variant = state.selectedVariant;
+      const quantity = Number(state.selectedQuantity || 1);
+
+      if (!variant || quantity < 1) return;
+
+      const button = $('#addToCartButton');
+      button.disabled = true;
+      button.textContent = 'Adding…';
+
+      try {
+        await addCartItem(variant.id, quantity);
+        $('#productDialog').close();
+        openCart();
+      } catch (error) {
+        if (error.redirecting) return;
+        console.error('Add to cart failed:', error);
+        alert(error.message || 'Unable to add item to cart.');
+      } finally {
+        button.textContent = 'Add to cart';
+        renderVariants();
+        updateQuantityControls();
+      }
+    }
+
+    // Renders cart drawer list, totals and remove-item actions.
+    function renderCart() {
+      // The server cart is the source of truth.
+      // Cart count represents the number of cart items returned by the server,
+      // not the sum of quantities.
+      const items = state.cart?.items || [];
+      const cartItemCount = items.length;
+      $('#cartCount').textContent = cartItemCount;
+
+      if (!items.length) {
+        $('#cartItems').innerHTML = `
+          <div class="flex h-full items-center justify-center text-center">
+            <div>
+              <p class="text-lg font-medium">Your cart is empty</p>
+              <p class="mt-2 text-sm text-black/40">Add something from the collection.</p>
+            </div>
+          </div>
+        `;
+        $('#cartTotal').textContent = money(0);
+        return;
+      }
+
+      // Server CartResponseDto contains variantId + quantity only, so enrich
+      // presentation using the already server-rendered product catalogue.
+      $('#cartItems').innerHTML = items.map(item => {
+        const product = state.products.find(product =>
+          (product.variants || []).some(variant => variant.id === item.variantId)
+        );
+        const variant = product?.variants?.find(variant => variant.id === item.variantId);
+        const image = product ? getPrimaryMedia(product) : '';
+        const attributes = Object.values(variant?.attributes || {}).join(' · ');
+        const price = Number(product?.price || 0);
+
+        return `
+          <div class="flex gap-4 border-b border-black/5 py-4">
+            <div class="h-20 w-16 shrink-0 overflow-hidden rounded-2xl bg-black/5">
+              ${image ? `<img src="${escapeHtml(image)}" class="h-full w-full object-cover" alt="">` : ''}
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex justify-between gap-3">
+                <p class="truncate text-sm font-medium">${escapeHtml(product?.name || 'Product')}</p>
+                <p class="text-sm font-medium">${money(price * Number(item.quantity || 0))}</p>
+              </div>
+              <p class="mt-1 text-xs text-black/40">${escapeHtml(attributes)}</p>
+              <div class="mt-3 flex items-center gap-3">
+                <span class="text-xs text-black/45">Qty ${item.quantity}</span>
+                <button data-cart-action="remove" data-variant-id="${item.variantId}" class="text-xs text-black/35 hover:text-black">Remove</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const total = items.reduce((sum, item) => {
+        const product = state.products.find(product =>
+          (product.variants || []).some(variant => variant.id === item.variantId)
+        );
+        return sum + Number(product?.price || 0) * Number(item.quantity || 0);
+      }, 0);
+
+      $('#cartTotal').textContent = money(total);
+
+      document.querySelectorAll('[data-cart-action]').forEach(button => {
+        button.addEventListener('click', async () => {
+          const variantId = button.dataset.variantId;
+
+          if (!state.cartId || button.dataset.cartAction !== 'remove') return;
+          if (!await SessionAuth.requireCompleteProfile()) return;
+
+          try {
+            const response = await apiFetch(
+              `${CART_API}/${encodeURIComponent(state.cartId)}/items/${encodeURIComponent(variantId)}`,
+              {
+                method: 'DELETE',
+                headers: { 'Accept': 'application/json' }
+              }
+            );
+
+            if (response.status === 404) {
+              state.cartId = null;
+              state.cart = null;
+              localStorage.removeItem(STORAGE_KEYS.CART_ID);
+              renderCart();
+              return;
+            }
+
+            if (!response.ok) {
+              throw new Error(`Cart update failed: ${response.status}`);
+            }
+
+            const json = await response.json();
+            state.cart = json.data;
+            renderCart();
+          } catch (error) {
+            if (error.redirecting) return;
+            console.error('Cart update failed:', error);
+            alert(error.message || 'Unable to update cart.');
+          }
+        });
+      });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Omega chat UI rendering and tool response integration.
+    // ---------------------------------------------------------------------------
+    async function openChat() {
+      if (!await SessionAuth.requireCompleteProfile()) return;
+      const dialog = $('#chatDialog');
+      state.chatOpen = true;
+
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+
+      setTimeout(() => $('#chatInput').focus(), 50);
+      scrollChatToBottom();
+    }
+
+    // Closes Omega dialog and resets open flag.
+    function closeChat() {
+      const dialog = $('#chatDialog');
+
+      if (dialog.open) {
+        dialog.close();
+      }
+
+      state.chatOpen = false;
+    }
+
+    // Keeps the latest message in view.
+    function scrollChatToBottom() {
+      const messages = $('#chatMessages');
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Appends a plain user/assistant chat bubble.
+    function appendChatMessage(role, content) {
+      const wrapper = document.createElement('div');
+
+      wrapper.className = role === 'user'
+        ? 'chat-message ml-auto max-w-[82%] rounded-[1.35rem] rounded-tr-md bg-black px-4 py-3 text-sm leading-6 text-white shadow-sm'
+        : 'chat-message max-w-[82%] rounded-[1.35rem] rounded-tl-md bg-white/75 px-4 py-3 text-sm leading-6 text-black/70 shadow-sm';
+
+      wrapper.textContent = content;
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+      return wrapper;
+    }
+
+    // Normalizes tool payloads that may be object, JSON string, or null.
+    function normalizeToolData(data) {
+      if (data == null) {
+        return null;
+      }
+
+      if (typeof data === 'object') {
+        return data;
+      }
+
+      if (typeof data === 'string') {
+        try {
+          return JSON.parse(data);
+        } catch (error) {
+          return data;
+        }
+      }
+
+      return data;
+    }
+
+    // Normalizes tool response collection into a stable array shape.
+    function normalizeToolResponses(toolResponseData) {
+      if (!Array.isArray(toolResponseData)) {
+        return [];
+      }
+
+      return toolResponseData.map(tool => ({
+        type: tool?.type || '',
+        data: normalizeToolData(tool?.data)
+      }));
+    }
+
+    // Extracts product arrays from flexible tool payload formats.
+    function getToolProducts(tool) {
+      const data = normalizeToolData(tool?.data);
+
+      if (Array.isArray(data)) {
+        return data;
+      }
+
+      if (Array.isArray(data?.products)) {
+        return data.products;
+      }
+
+      return [];
+    }
+
+    // Reconciles tool product with authoritative in-page catalogue product.
+    function getCatalogueProduct(product) {
+      if (!product?.id) {
+        return product;
+      }
+
+      return state.products.find(
+        item => item.id === product.id
+      ) || product;
+    }
+
+    // ---------------------------------------------------------------------------
+    // Structured tool widgets (products/cart/checkout/order) inside chat.
+    // ---------------------------------------------------------------------------
+    function appendChatProducts(products) {
+      if (!Array.isArray(products) || !products.length) {
+        return;
+      }
+
+      const wrapper = document.createElement('div');
+
+      wrapper.className =
+        'omega-tool-card max-w-full';
+
+      wrapper.innerHTML = `
+        <p class="mb-2 px-1 text-[10px] font-medium uppercase tracking-[.16em] text-black/35">
+          Products
+        </p>
+
+        <div class="omega-product-scroll flex gap-2 overflow-x-auto pb-2"></div>
+      `;
+
+      const scroll =
+        wrapper.querySelector('.omega-product-scroll');
+
+      products
+        .filter(Boolean)
+        .slice(0, 8)
+        .forEach(product => {
+
+          const catalogueProduct =
+            getCatalogueProduct(product);
+
+          const image =
+            getPrimaryMedia(catalogueProduct);
+
+          const card =
+            document.createElement('button');
+
+          card.type = 'button';
+
+          card.className =
+            'omega-product-card group overflow-hidden rounded-2xl border border-black/5 bg-white/75 text-left shadow-sm';
+
+          card.setAttribute(
+            'aria-label',
+            `View ${product.name || 'product'}`
+          );
+
+          card.innerHTML = `
+            <div class="omega-product-image overflow-hidden">
+              ${
+                image
+                  ? `
+                      <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(product.name || '')}"
+                        loading="lazy"
+                        class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      />
+                    `
+                  : `
+                      <div class="flex h-full items-center justify-center text-[9px] uppercase tracking-[.12em] text-black/25">
+                        No image
+                      </div>
+                    `
+              }
+            </div>
+
+            <div class="p-2.5">
+              <p class="line-clamp-2 text-[11px] font-medium leading-4">
+                ${escapeHtml(product.name || 'Product')}
+              </p>
+
+              <p class="mt-1 text-[11px] font-medium text-black/55">
+                ${money(product.price)}
+              </p>
+
+              <p class="mt-1 line-clamp-2 text-[10px] leading-4 text-black/35">
+                ${escapeHtml(product.description || '')}
+              </p>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            closeChat();
+            openProduct(catalogueProduct);
+          });
+
+          scroll.appendChild(card);
+        });
+
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+    }
+
+    // Renders a compact cart summary card from Omega tool output.
+    function appendChatCart(tool) {
+      const cart =
+        normalizeToolData(tool?.data);
+
+      if (!cart || typeof cart !== 'object') {
+        return;
+      }
+
+      const items =
+        Array.isArray(cart.items)
+          ? cart.items
+          : [];
+
+      const total =
+        cart.totalAmount ??
+        cart.total ??
+        cart.subtotal;
+
+      const wrapper =
+        document.createElement('div');
+
+      wrapper.className =
+        'omega-tool-card rounded-2xl border border-black/5 bg-white/65 p-3 shadow-sm';
+
+      wrapper.innerHTML = `
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold">Cart updated</p>
+            <p class="mt-1 text-[11px] text-black/40">
+              ${items.length}
+              ${items.length === 1 ? 'item' : 'items'}
+            </p>
+          </div>
+
+          ${
+            total != null
+              ? `
+                  <span class="text-xs font-semibold">
+                    ${money(total)}
+                  </span>
+                `
+              : ''
+          }
+        </div>
+
+        ${
+          cart.id
+            ? `
+                <button
+                  type="button"
+                  data-chat-view-cart
+                  class="omega-action mt-3 w-full rounded-full bg-black px-4 py-2.5 text-[11px] font-medium text-white"
+                >
+                  View cart
+                </button>
+              `
+            : ''
+        }
+      `;
+
+      const button =
+        wrapper.querySelector('[data-chat-view-cart]');
+
+      if (button) {
+        button.addEventListener('click', async () => {
+
+          state.cartId = cart.id;
+
+          localStorage.setItem(
+            STORAGE_KEYS.CART_ID,
+            cart.id
+          );
+
+          closeChat();
+          await openCart();
+        });
+      }
+
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+    }
+
+    // Renders payment CTA card when checkout tool returns paymentUrl.
+    function appendChatCheckout(tool) {
+      const checkout =
+        normalizeToolData(tool?.data);
+
+      if (!checkout || typeof checkout !== 'object') {
+        return;
+      }
+
+      if (!checkout.paymentUrl) {
+        return;
+      }
+
+      const wrapper =
+        document.createElement('div');
+
+      wrapper.className =
+        'omega-tool-card rounded-2xl border border-black/5 bg-white/70 p-3 shadow-sm';
+
+      wrapper.innerHTML = `
+        <div class="flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-xs font-semibold">
+              Payment ready
+            </p>
+
+            ${
+              checkout.orderId
+                ? `
+                    <p class="mt-1 truncate text-[11px] text-black/40">
+                      Order ${escapeHtml(checkout.orderId)}
+                    </p>
+                  `
+                : ''
+            }
+          </div>
+
+          <span class="shrink-0 rounded-full bg-black/5 px-2 py-1 text-[10px] font-medium uppercase tracking-[.12em] text-black/45">
+            ${escapeHtml(
+              checkout.status ||
+              checkout.orderStatus ||
+              'PENDING'
+            )}
+          </span>
+        </div>
+
+        <a
+          href="${escapeHtml(checkout.paymentUrl)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="omega-action mt-3 flex w-full items-center justify-center rounded-full bg-black px-4 py-2.5 text-[11px] font-medium text-white"
+        >
+          Complete payment
+        </a>
+      `;
+
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+    }
+
+    // Renders order status card returned by ORDER/ORDER_STATUS tools.
+    function appendChatOrderStatus(tool) {
+      const order =
+        normalizeToolData(tool?.data);
+
+      if (!order || typeof order !== 'object') {
+        return;
+      }
+
+      const wrapper =
+        document.createElement('div');
+
+      wrapper.className =
+        'omega-tool-card rounded-2xl border border-black/5 bg-white/65 p-3 shadow-sm';
+
+      wrapper.innerHTML = `
+        <div>
+          <p class="text-xs font-semibold">
+            Order status
+          </p>
+
+          <p class="mt-1 text-[11px] text-black/40">
+            ${escapeHtml(
+              order.status ||
+              order.orderStatus ||
+              'Unknown'
+            )}
+          </p>
+        </div>
+      `;
+
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+    }
+
+    // Routes each tool payload to its corresponding UI renderer.
+    function appendChatToolResponses(toolResponseData) {
+      const tools =
+        normalizeToolResponses(toolResponseData);
+
+      tools.forEach(tool => {
+        if (SessionAuth.handleSecurityError(normalizeToolData(tool.data))
+            || SessionAuth.handleSecurityError(tool)) return;
+
+        switch (tool.type) {
+
+          case TOOL_TYPES.PRODUCTS:
+            appendChatProducts(
+              getToolProducts(tool)
+            );
+            break;
+
+          case TOOL_TYPES.PRODUCT:
+            appendChatProducts([
+              normalizeToolData(tool.data)
+            ]);
+            break;
+
+          case TOOL_TYPES.CART:
+          case TOOL_TYPES.CART_UPDATED:
+            appendChatCart(tool);
+            break;
+
+          case TOOL_TYPES.CHECKOUT:
+            appendChatCheckout(tool);
+            break;
+
+          case TOOL_TYPES.ORDER:
+          case TOOL_TYPES.ORDER_STATUS:
+            appendChatOrderStatus(tool);
+            break;
+
+          default:
+            break;
+        }
+      });
+    }
+
+    // Displays temporary typing indicator while waiting for Omega.
+    function appendTypingIndicator() {
+      const wrapper = document.createElement('div');
+      wrapper.id = 'omegaTyping';
+      wrapper.className = 'chat-message max-w-[82%] rounded-[1.35rem] rounded-tl-md bg-white/75 px-4 py-3 text-sm text-black/45 shadow-sm';
+      wrapper.innerHTML = `
+        <span class="inline-flex items-center gap-1">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-black/30"></span>
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-black/20"></span>
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-black/15"></span>
+        </span>
+      `;
+      $('#chatMessages').appendChild(wrapper);
+      scrollChatToBottom();
+      return wrapper;
+    }
+
+    // Sends one Omega prompt with store/cart context.
+    async function sendChatMessage(message) {
+      const response = await apiFetch(AI_CHAT_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          message,
+          storeId: state.store?.id || null,
+          cartId: state.cartId || null
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Omega request failed: ${response.status}`);
+      }
+
+      const json = await response.json();
+      return json.data ?? json;
+    }
+
+    // Chat form submit flow: append user message, call API, render results.
+    async function handleChatSubmit(event) {
+      event.preventDefault();
+
+      if (state.chatSending) {
+        return;
+      }
+
+      const input = $('#chatInput');
+      const message = input.value.trim();
+
+      if (!message) {
+        return;
+      }
+
+      appendChatMessage('user', message);
+      input.value = '';
+      input.style.height = 'auto';
+
+      state.chatSending = true;
+      $('#chatSendButton').disabled = true;
+
+      const typing = appendTypingIndicator();
+
+      try {
+        const data = await sendChatMessage(message);
+        typing.remove();
+
+        const toolResponses =
+          normalizeToolResponses(
+            data?.toolResponseData
+          );
+
+        const cartTool =
+          toolResponses.find(tool =>
+            tool.type === TOOL_TYPES.CART ||
+            tool.type === TOOL_TYPES.CART_UPDATED
+          );
+
+        const cartData =
+          cartTool?.data?.id
+            ? cartTool.data
+            : null;
+
+        if (cartData?.id) {
+          state.cartId = cartData.id;
+
+          localStorage.setItem(
+            STORAGE_KEYS.CART_ID,
+            cartData.id
+          );
+
+          await loadCart();
+        }
+
+        appendChatMessage(
+          'assistant',
+          data?.message || 'I was unable to generate a response.'
+        );
+
+        appendChatToolResponses(
+          data?.toolResponseData
+        );
+      } catch (error) {
+        typing.remove();
+        if (error.redirecting) return;
+        console.error('Omega chat failed:', error);
+        appendChatMessage(
+          'assistant',
+          'Sorry, Omega is unavailable right now. Please try again.'
+        );
+      } finally {
+        state.chatSending = false;
+        $('#chatSendButton').disabled = false;
+        input.focus();
+      }
+    }
+
+    // Opens cart drawer after profile gate and latest cart sync.
+    async function openCart() {
+      if (!await SessionAuth.requireCompleteProfile()) return;
+      await loadCart();
+      if (SessionAuth.state.status !== 'complete') return;
+      $('#cartDrawer').classList.remove('translate-x-full');
+      $('#drawerOverlay').classList.remove('pointer-events-none', 'opacity-0');
+      $('#drawerOverlay').classList.add('opacity-100');
+    }
+
+    // Closes cart drawer and overlay.
+    function closeCart() {
+      $('#cartDrawer').classList.add('translate-x-full');
+      $('#drawerOverlay').classList.add('pointer-events-none', 'opacity-0');
+      $('#drawerOverlay').classList.remove('opacity-100');
+    }
+
+    /*
+     * Server-rendered storefront.
+     * StorePageController puts StoreViewResponse in the model as "store".
+     * JS is now enhancement only; the initial store/product content is already
+     * available to crawlers in the rendered HTML.
+     */
+    const SERVER_STORE = {
+      storeSlug: /*[[${storeSlug}]]*/ '',
+      storeResponseDto: /*[[${store.storeResponseDto}]]*/ {},
+      categoryResourceDtos: /*[[${store.categoryResourceDtos}]]*/ [],
+      locationResponseDtos: /*[[${store.locationResponseDtos}]]*/ [],
+      productResponseDtos: /*[[${store.productResponseDtos}]]*/ [],
+      page: /*[[${store.page}]]*/ 1,
+      pageSize: /*[[${store.pageSize}]]*/ 12,
+      totalPages: /*[[${store.totalPages}]]*/ 1,
+      totalProducts: /*[[${store.totalProducts}]]*/ 0,
+      // Present only on /{slug}/product/{id} deep links; pre-opens the
+      // product dialog on load so shared links/QR scans land straight on it.
+      selectedProduct: /*[[${selectedProduct}]]*/ null
+    };
+
+    // Bootstraps all storefront state from server-rendered payload.
+    async function init() {
+      state.store = SERVER_STORE.storeResponseDto;
+      state.storeSlug = SERVER_STORE.storeSlug || '';
+      state.categories = SERVER_STORE.categoryResourceDtos || [];
+      state.locations = SERVER_STORE.locationResponseDtos || [];
+      state.page = Number(SERVER_STORE.page || 1);
+      state.pageSize = Number(SERVER_STORE.pageSize || 12);
+      state.totalPages = Number(SERVER_STORE.totalPages || 1);
+      state.products = SERVER_STORE.productResponseDtos || [];
+
+      const savedTheme = localStorage.getItem('vektrlabs-theme') || 'light';
+      SessionAuth.applyTheme(savedTheme);
+
+      renderStore();
+      renderLocations();
+      updateCategoryButtons();
+      renderProducts();
+
+      // Deep link: /{slug}/product/{id} server-renders the product already
+      // pre-selected, so open its dialog without touching browser history
+      // (the URL already matches the canonical product page).
+      if (SERVER_STORE.selectedProduct) {
+        openProduct(SERVER_STORE.selectedProduct, { updateUrl: false });
+      }
+
+      await SessionAuth.refreshProfile();
+      await loadCart();
+      await handlePaymentReturn();
+    }
+
+    // ---------------------------------------------------------------------------
+    // DOM event wiring: nav, dialogs, mobile menu, quantity controls and chat.
+    // ---------------------------------------------------------------------------
+    $('#cartButton').addEventListener('click', () => openCart());
+
+    $('#chatButton').addEventListener('click', openChat);
+
+    $('#mobileChatButton').addEventListener('click', () => {
+      closeMobileMenu();
+      openChat();
+    });
+
+    $('#closeChat').addEventListener('click', closeChat);
+    $('#chatForm').addEventListener('submit', handleChatSubmit);
+
+    $('#chatInput').addEventListener('input', event => {
+      event.target.style.height = 'auto';
+      event.target.style.height = `${Math.min(event.target.scrollHeight, 140)}px`;
+    });
+
+    $('#chatInput').addEventListener('keydown', event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        $('#chatForm').requestSubmit();
+      }
+    });
+
+    function closeMobileMenu() {
+      $('#mobileMenu').classList.add('hidden');
+      $('#mobileMenuButton').setAttribute('aria-expanded', 'false');
+      $('#mobileMenuIcon').innerHTML =
+        '<path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path>';
+    }
+
+    $('#mobileMenuButton').addEventListener('click', () => {
+      const menu = $('#mobileMenu');
+      const isOpen = !menu.classList.contains('hidden');
+
+      menu.classList.toggle('hidden', isOpen);
+      $('#mobileMenuButton').setAttribute('aria-expanded', String(!isOpen));
+
+      $('#mobileMenuIcon').innerHTML = !isOpen
+        ? '<path d="M6 6l12 12"></path><path d="M18 6L6 18"></path>'
+        : '<path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path>';
+    });
+
+    $('#mobileMenuClose').addEventListener('click', closeMobileMenu);
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    window.addEventListener('scroll', handleScrollPagination, { passive: true });
+    $('#closeCart').addEventListener('click', closeCart);
+    $('#drawerOverlay').addEventListener('click', closeCart);
+    $('#chatDialog').addEventListener('close', () => {
+      state.chatOpen = false;
+    });
+    document.querySelector('[data-category="all"]').addEventListener('click', () => {
+      state.activeCategory = 'all';
+      updateCategoryButtons();
+      updateCategoryPill();
+      renderProducts();
+    });
+    $('#closeDialog').addEventListener('click', () => $('#productDialog').close());
+    $('#productDialog').addEventListener('click', event => {
+      if (event.target === event.currentTarget) {
+        event.currentTarget.close();
+      }
+    });
+    // Restores the store's root URL whenever the dialog is dismissed, no
+    // matter how (close button, backdrop click or Esc), since the native
+    // 'close' event fires for all of them.
+    $('#productDialog').addEventListener('close', () => {
+      const rootPath = `/${state.storeSlug || SERVER_STORE.storeSlug || ''}`;
+      if (window.location.pathname !== rootPath) {
+        window.history.pushState({}, '', `${window.location.origin}${rootPath}`);
+      }
+    });
+    $('#shareProduct').addEventListener('click', shareSelectedProduct);
+    $('#dialogMediaPrevious').addEventListener('click', () => moveProductMedia(-1));
+    $('#dialogMediaNext').addEventListener('click', () => moveProductMedia(1));
+    $('#addToCartButton').addEventListener('click', addToCart);
+    $('#quantityDecrease').addEventListener('click', () => {
+      setSelectedQuantity(Number(state.selectedQuantity || 1) - 1);
+    });
+    $('#quantityIncrease').addEventListener('click', () => {
+      setSelectedQuantity(Number(state.selectedQuantity || 1) + 1);
+    });
+    $('#quantityInput').addEventListener('input', event => {
+      setSelectedQuantity(event.target.value);
+    });
+    $('#quantityInput').addEventListener('blur', event => {
+      setSelectedQuantity(event.target.value);
+    });
+
+    // ---------------------------------------------------------------------------
+    // Browser checkout flow. Omega checkout responses reuse this destination.
+    // ---------------------------------------------------------------------------
+    async function checkout() {
+      if (!await SessionAuth.requireCompleteProfile()) return;
+      if (!state.cartId || !(state.cart?.items?.length)) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      const button = $('#checkoutButton');
+      button.disabled = true;
+      button.textContent = 'Creating checkout…';
+
+      try {
+        const response = await apiFetch(
+          `${CART_API}/${encodeURIComponent(state.cartId)}/checkout`,
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json'
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Checkout failed: ${response.status}`);
+        }
+
+        const json = await response.json();
+        const order = json.data;
+
+        if (!order?.paymentUrl) {
+          throw new Error('Checkout response did not contain a Stripe payment URL.');
+        }
+
+        sessionStorage.setItem(STORAGE_KEYS.PENDING_ORDER, JSON.stringify({
+          orderId: order.id,
+          cartId: order.cartId || state.cartId,
+          status: order.status,
+          totalAmount: order.totalAmount
+        }));
+
+        window.location.assign(order.paymentUrl);
+      } catch (error) {
+        if (error.redirecting) return;
+        console.error('Checkout failed:', error);
+        alert(error.message || 'Unable to start checkout.');
+        button.disabled = false;
+        button.textContent = 'Checkout';
+      }
+    }
+
+    $('#checkoutButton').addEventListener('click', checkout);
+
+
+    // ---------------------------------------------------------------------------
+    // Payment-return polling and order notification banner handling.
+    // ---------------------------------------------------------------------------
+    function getOrderStatusTitle(status) {
+      switch (status) {
+        case 'PAID':
+          return 'Order confirmed';
+        case 'FAILED':
+          return 'Payment failed';
+        case 'CANCELLED':
+          return 'Order cancelled';
+        case 'PENDING':
+          return 'Order processing';
+        default:
+          return 'Order status';
+      }
+    }
+
+    // Creates a transient top-of-page notification for order state updates.
+    function showOrderNotification(title, message, status) {
+      document.querySelectorAll('[data-order-notification]').forEach(
+        notification => notification.remove()
+      );
+
+      const notice = document.createElement('div');
+      notice.dataset.orderNotification = 'true';
+      notice.className =
+        'fixed left-1/2 top-24 z-50 w-[min(560px,calc(100%-2rem))] -translate-x-1/2 rounded-2xl border border-black/5 bg-white/90 p-5 shadow-2xl backdrop-blur-xl';
+
+      notice.innerHTML = `
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-sm font-semibold">${escapeHtml(title)}</p>
+            <p class="mt-1 text-xs leading-5 text-black/50">${escapeHtml(message)}</p>
+            ${status ? `
+              <p class="mt-2 text-xs font-medium text-black/70">
+                Status: ${escapeHtml(status)}
+              </p>
+            ` : ''}
+          </div>
+          <button type="button" class="rounded-full bg-black/5 px-3 py-1 text-xs">
+            Close
+          </button>
+        </div>
+      `;
+
+      notice.querySelector('button').addEventListener('click', () => notice.remove());
+      document.body.appendChild(notice);
+
+      return notice;
+    }
+
+    // Polls order endpoint after payment provider redirects back with orderId.
+    async function handlePaymentReturn() {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('orderId');
+
+      if (!orderId) {
+        return;
+      }
+      if (!await SessionAuth.requireCompleteProfile()) return;
+
+      const maxAttempts = PAYMENT_RETURN_MAX_ATTEMPTS;
+      const pollingInterval = PAYMENT_RETURN_POLLING_INTERVAL_MS;
+
+      showOrderNotification(
+        'Order processing',
+        `Order ${orderId} is being confirmed.`,
+        'PENDING'
+      );
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        try {
+          const response = await apiFetch(
+            `${ORDER_API}/${encodeURIComponent(orderId)}`,
+            {
+              headers: {
+                'Accept': 'application/json'
+              }
+            }
+          );
+
+          if (response.status === 404) {
+            showOrderNotification(
+              'Order not found',
+              `We could not find order ${orderId}.`
+            );
+            return;
+          }
+
+          if (!response.ok) {
+            throw new Error(`Order request failed: ${response.status}`);
+          }
+
+          const json = await response.json();
+          const order = json.data;
+
+          if (!order) {
+            throw new Error('Order response did not contain order data.');
+          }
+
+          if (TERMINAL_ORDER_STATUSES.includes(order.status)) {
+            showOrderNotification(
+              getOrderStatusTitle(order.status),
+              `Order ${order.id}`,
+              order.status
+            );
+
+            sessionStorage.removeItem(STORAGE_KEYS.PENDING_ORDER);
+
+            window.history.replaceState(
+              {},
+              document.title,
+              window.location.pathname
+            );
+
+            return;
+          }
+
+          showOrderNotification(
+            getOrderStatusTitle(order.status),
+            `Order ${order.id} is still being processed.`,
+            order.status
+          );
+        } catch (error) {
+          if (error.redirecting) return;
+          console.error('Unable to retrieve order status:', error);
+
+          if (attempt === maxAttempts - 1) {
+            showOrderNotification(
+              'Order processing',
+              `We could not confirm the latest status for order ${orderId}. Please check again shortly.`,
+              'PENDING'
+            );
+          }
+        }
+
+        await new Promise(resolve =>
+          setTimeout(resolve, pollingInterval)
+        );
+      }
+    }
+
+    // Entry point.
+    init().catch(error => {
+      console.error('Store initialization failed:', error);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+spring.application.name=vektrlabs
+spring.jpa.hibernate.ddl-auto=update
+
+# PostgreSQL & pgvector
+spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/vektrlabs}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME:postgres}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:postgres}
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# AWS Credentials
+aws.credentials.access-key=${AWS_ACCESS_KEY_ID:}
+aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY:}
+
+# S3 Configuration
+aws.s3.region.static=${AWS_S3_REGION:eu-central-1}
+aws.s3.bucket=${AWS_S3_BUCKET:vektrlabs-local}
+
+# Stripe Configuration
+stripe.api.key=${STRIPE_API_KEY:}
+# payment.success.url and failure.url should be configurable
+payment.success.url=${PAYMENT_SUCCESS_URL:http://localhost:8080/api/v1/payment/callback?success=true}
+payment.failure.url=${PAYMENT_FAILURE_URL:http://localhost:8080/api/v1/payment/callback?success=false}
+
+# SendGrid Configuration
+sendGrid.apiKey=${SENDGRID_API_KEY:}
+sendGrid.sendEmail=${SENDGRID_SENDER_EMAIL:}
+
+# Twilio Configuration
+twilio.account-sid=${TWILIO_ACCOUNT_SID:}
+twilio.auth-token=${TWILIO_AUTH_TOKEN:}
+twilio.phone-number=${TWILIO_PHONE_NUMBER:}
+
+# OpenAI Configuration
+spring.ai.openai.api-key=${OPENAI_API_KEY:}
+spring.ai.openai.chat.model=${OPENAI_CHAT_MODEL:gpt-4o-mini}
+spring.ai.openai.chat.temperature=${OPENAI_CHAT_TEMPERATURE:0.2}
+spring.ai.openai.chat.max-tokens=${OPENAI_CHAT_MAX_TOKENS:1024}
+
+spring.ai.openai.embedding.model=${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+spring.ai.vectorstore.pgvector.initialize-schema=true
+
+ai.rag.system-prompt=${AI_RAG_SYSTEM_PROMPT:You are O...}
+
+# AWS Cognito (Authorization Code flow, confidential client)
+# issuer-uri format: https://cognito-idp.{region}.amazonaws.com/{userPoolId}
+spring.security.oauth2.client.provider.cognito.issuer-uri=${COGNITO_ISSUER_URI:}
+spring.security.oauth2.client.registration.cognito.client-id=${COGNITO_CLIENT_ID:}
+spring.security.oauth2.client.registration.cognito.client-secret=${COGNITO_CLIENT_SECRET:}
+spring.security.oauth2.client.registration.cognito.client-authentication-method=client_secret_basic
+spring.security.oauth2.client.registration.cognito.scope=openid,email
+spring.security.oauth2.client.registration.cognito.redirect-uri=${COGNITO_REDIRECT_URI:http://localhost:8080/login/oauth2/code/cognito}
+spring.security.oauth2.client.registration.cognito.authorization-grant-type=authorization_code
+
+# Cognito Hosted UI logout endpoint, used by the app's logout success handler
+vektrlabs.cognito.logout-uri=${COGNITO_LOGOUT_URI:}
+vektrlabs.cognito.client-id=${COGNITO_CLIENT_ID:}
+# Must exactly match an allowed Cognito sign-out URL; never derive it from Host.
+vektrlabs.cognito.post-logout-redirect-uri=${COGNITO_POST_LOGOUT_REDIRECT_URI:http://localhost:8080}
+
+# Logging
+logging.level.org.springframework.security=error
+logging.level.org.springframework.security.oauth2=error
+logging.level.org.springframework.web=DEBUG

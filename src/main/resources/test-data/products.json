@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Nike Pro Dri-FIT Compression Shirt Black",
+    "description": "Lightweight Nike Pro compression shirt featuring Dri-FIT technology for moisture management during intense workouts.",
+    "price": 39.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Compression Shirt White",
+    "description": "Classic white compression shirt providing muscle support and breathable comfort for training and competition.",
+    "price": 39.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro HyperCool Compression Top",
+    "description": "Ultra-light HyperCool compression shirt engineered for high-intensity training with mesh ventilation panels.",
+    "price": 44.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Long Sleeve Compression Black",
+    "description": "Long sleeve compression shirt offering warmth, flexibility, and sweat-wicking performance.",
+    "price": 49.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Compression Tank",
+    "description": "Sleeveless compression tank designed for unrestricted movement and superior ventilation.",
+    "price": 34.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Elite Compression Shirt Navy",
+    "description": "Premium compression shirt built for elite athletes with ergonomic seams and stretch fabric.",
+    "price": 54.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Combat Compression Shirt",
+    "description": "High-performance compression shirt designed for contact sports with reinforced stitching.",
+    "price": 47.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Training Compression Grey",
+    "description": "Soft, breathable compression shirt ideal for weightlifting, CrossFit, and functional fitness.",
+    "price": 42.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Warm Compression Top",
+    "description": "Thermal compression shirt designed to keep athletes warm during cold-weather training sessions.",
+    "price": 52.99,
+    "active": true
+  },
+  {
+    "name": "Nike Pro Compression Shirt University Red",
+    "description": "Bold red compression shirt featuring four-way stretch fabric for maximum mobility and support.",
+    "price": 41.99,
+    "active": true
+  }
+]

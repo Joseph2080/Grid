@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signing in — Vektrlabs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/account.css?v=20260915">
+  <script src="/js/session.js?v=20260915" defer></script>
+  <script src="/js/auth-continue.js?v=20260913" defer></script>
+</head>
+<body>
+<header class="auth-shell">
+  <div class="auth-bar">
+    <div class="brand-mark">V</div>
+    <div class="auth-actions">
+      <button type="button" data-theme-toggle class="theme-toggle-button" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 12.8A7.7 7.7 0 0 1 11.2 4a8.2 8.2 0 1 0 8.8 8.8Z"></path>
+        </svg>
+      </button>
+      <a href="#" data-profile-action class="profile-pill-link" aria-label="Login">Login</a>
+      <button id="retryContinue" type="button" hidden class="account-pill-button secondary">Retry</button>
+    </div>
+  </div>
+</header>
+<main class="auth-card">
+  <p id="continueMessage" role="status" aria-live="polite">Checking your profile…</p>
+  <div class="account-actions">
+  </div>
+  <p><a id="backToStore" href="/">Continue browsing</a></p>
+  <noscript>JavaScript is required to finish signing in.</noscript>
+</main>
+</body>
+</html>

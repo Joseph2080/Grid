@@ -1,0 +1,235 @@
+{
+  "header": {
+    "nav": {
+      "platform": "Platform",
+      "technology": "Ecosystem",
+      "vision": "Lifecycle",
+      "company": "Contact",
+      "talkToUs": "Talk to us"
+    }
+  },
+  "hero": {
+    "headline": "Building the Digital Economy of Tomorrow",
+    "subheadline": "The infrastructure helping merchants sell across regions with local currencies in one connected commerce system.",
+    "ctaButton": "Explore the platform"
+  },
+  "economy": {
+    "eyebrow": "01 — The Digital Economy",
+    "title": "Building the infrastructure for modern business.",
+    "description": "Selling across regions, currencies and channels no longer requires disconnected tools. Grid connects commerce operations into one system built for global growth.",
+    "cta": "Learn more"
+  },
+  "platform": {
+    "eyebrow": "03 — The Grid Platform",
+    "title": "One platform. Multiple systems.",
+    "subtitle": "Every capability a digital economy needs, connected by default.",
+    "item1": {
+      "title": "Commerce",
+      "description": "Build and operate digital storefronts that adapt to how people actually buy."
+    },
+    "item2": {
+      "title": "Intelligence",
+      "description": "AI-powered decisions across inventory, pricing, and growth."
+    },
+    "item3": {
+      "title": "Global Selling",
+      "description": "Create stores in a region, specify the currency, and sell on a global scale!"
+    },
+    "item4": {
+      "title": "Infrastructure",
+      "description": "We provide ready-to-use tools and abstractions to create this experience and simplify E-commerce and creating your digital store."
+    }
+  },
+  "ai": {
+    "eyebrow": "AI Store Manager",
+    "title": "Your business has an AI operator.",
+    "subtitle": "Ask. Decide. Execute.",
+    "chat1": {
+      "you": "Which products are underperforming this month?",
+      "ai": "17 products are below their 30-day sales baseline. I've identified 6 candidates for a promotion.",
+      "action": "View recommendations"
+    },
+    "chat2": {
+      "you": "Create a 15% promotion for the top three candidates.",
+      "ai": "Promotion created.",
+      "stat1": "3 products",
+      "stat2": "15% discount",
+      "stat3": "Valid for 7 days",
+      "action": "Publish promotion"
+    }
+  },
+  "ecosystem": {
+    "eyebrow": "03 — One Connected Economy",
+    "title": "One economy. One connected system.",
+    "description": "Customers, merchants, regions and currencies move through a single connected core — visible, measurable, and always in sync."
+  },
+  "lifecycle": {
+    "eyebrow": "03 — The digital business experience",
+    "title": "Built for the entire digital business experience.",
+    "description": "From first discovery to global scale, every stage runs on the same connected infrastructure.",
+    "stage1": "Discover",
+    "stage2": "Create",
+    "stage3": "Sell",
+    "stage4": "Transact",
+    "stage5": "Analyze",
+    "stage6": "Optimize",
+    "stage7": "Scale"
+  },
+  "finalCta": {
+    "title": "Scale without borders.",
+    "subtitle": "Grid is building the infrastructure for global commerce so merchants can sell products in multiple regions.",
+    "button": "Get in touch"
+  },
+  "footer": {
+    "nav": {
+      "platform": "Platform",
+      "technology": "Ecosystem",
+      "vision": "Lifecycle"
+    },
+    "legal": {
+      "privacy": "privacy policy",
+      "cookies": "cookies policy"
+    },
+    "backToTop": "back to top",
+    "copyright": "All rights reserved © 2026 Grid"
+  },
+  "cookies": {
+    "title": "Cookies Policy - Bazar",
+    "heading": "Cookies Policy",
+    "noTracking": {
+      "title": "No Cookies, No Tracking",
+      "description": "Bazar does not use cookies, tracking pixels, or any other tracking technologies on this website. We respect your privacy and believe in a clean, cookie-free browsing experience."
+    },
+    "whatAre": {
+      "title": "What Are Cookies?",
+      "description": "Cookies are small text files that websites typically store on your device to remember information about you, such as your preferences, login status, or browsing behavior."
+    },
+    "ourApproach": {
+      "title": "Our Approach",
+      "description": "We have deliberately chosen not to implement any cookies or tracking mechanisms on our website. This means:"
+    },
+    "benefits": {
+      "noCookies": "No cookies are stored on your device",
+      "noTracking": "No tracking of your browsing behavior",
+      "noAds": "No advertising cookies or third-party trackers",
+      "noAnalytics": "No analytics cookies (we use server-side analytics only)",
+      "noConsent": "No cookie consent banners needed"
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "description": "While our website itself doesn't use cookies, please note that if you interact with external services (such as embedded videos or social media content), those services may have their own cookie policies."
+    },
+    "browserSettings": {
+      "title": "Browser Settings",
+      "description": "Since we don't use cookies, you don't need to adjust your browser settings for our website. However, you can always configure your browser to block cookies from other websites if desired."
+    },
+    "futureChanges": {
+      "title": "Future Changes",
+      "description": "Should we ever decide to implement cookies in the future, we will update this policy and notify users accordingly. Any such changes would be made with user privacy as our top priority."
+    },
+    "contact": {
+      "title": "Questions?",
+      "description": "If you have any questions about our cookie policy or privacy practices, please feel free to contact us through the contact information provided on our main website."
+    },
+    "lastUpdated": "Last updated: November 21, 2025",
+    "backToHome": "Back to Home"
+  },
+  "privacy": {
+    "title": "Privacy Policy - Bazar",
+    "heading": "Privacy Policy",
+    "commitment": {
+      "title": "Our Privacy Commitment",
+      "description": "Bazar is committed to protecting your privacy and ensuring transparent data practices. This policy outlines how we collect, use, and protect your information when you use our web application."
+    },
+    "dataCollection": {
+      "title": "Information We Collect",
+      "account": {
+        "title": "Account Information",
+        "description": "When you create an account with Bazar, we collect:",
+        "email": "Email address (for login and communications)",
+        "name": "Full name (for personalization)",
+        "profile": "Profile information you choose to provide",
+        "preferences": "User preferences and settings"
+      },
+      "session": {
+        "title": "Session Data",
+        "description": "To provide a seamless experience, we maintain session data including:",
+        "login": "Login status and authentication tokens",
+        "cart": "Shopping cart contents",
+        "navigation": "Navigation history within the app",
+        "temp": "Temporary data for app functionality"
+      },
+      "usage": {
+        "title": "Usage Information",
+        "description": "We collect aggregated usage data to improve our services:",
+        "features": "Feature usage statistics",
+        "performance": "App performance metrics",
+        "errors": "Error reports and crash logs"
+      }
+    },
+    "dataUse": {
+      "title": "How We Use Your Information",
+      "service": "Provide and maintain our e-commerce platform",
+      "account": "Manage your account and authenticate users",
+      "personalize": "Personalize your shopping experience",
+      "communication": "Send important service communications",
+      "security": "Detect and prevent security threats",
+      "improve": "Improve our services and develop new features"
+    },
+    "dataStorage": {
+      "title": "Data Storage and Security",
+      "location": {
+        "title": "Storage Location",
+        "description": "Your data is stored on secure servers with industry-standard encryption and access controls."
+      },
+      "session": {
+        "title": "Session Management",
+        "description": "Session data is temporarily stored in your browser's local storage and automatically expires after periods of inactivity for security purposes."
+      },
+      "security": {
+        "title": "Security Measures",
+        "encryption": "End-to-end encryption for sensitive data",
+        "access": "Strict access controls and authentication",
+        "monitoring": "Continuous security monitoring",
+        "updates": "Regular security updates and patches"
+      }
+    },
+    "dataSharing": {
+      "title": "Data Sharing",
+      "description": "We do not sell, rent, or share your personal information with third parties except in the following limited circumstances:",
+      "service": "With service providers who assist in app functionality (under strict confidentiality agreements)",
+      "legal": "When required by law or to protect our legal rights",
+      "consent": "With your explicit consent"
+    },
+    "userRights": {
+      "title": "Your Rights",
+      "description": "You have the following rights regarding your personal information:",
+      "access": "Access your personal data",
+      "correct": "Correct inaccurate information",
+      "delete": "Request deletion of your account and data",
+      "export": "Export your data in a portable format",
+      "opt": "Opt out of non-essential communications"
+    },
+    "dataRetention": {
+      "title": "Data Retention",
+      "description": "We retain your information only as long as necessary to provide our services and fulfill legal obligations. Session data is automatically cleared upon logout or after extended periods of inactivity."
+    },
+    "minors": {
+      "title": "Children's Privacy",
+      "description": "Bazar is not intended for use by children under 13 years of age. We do not knowingly collect personal information from children under 13."
+    },
+    "changes": {
+      "title": "Policy Changes",
+      "description": "We may update this privacy policy from time to time. We will notify users of any material changes via email or through the application interface."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "description": "If you have questions about this privacy policy or wish to exercise your rights, please contact us through the contact information provided on our main website."
+    },
+    "lastUpdated": "Last updated: November 21, 2025",
+    "backToHome": "Back to Home"
+  },
+  "nav": {
+    "home": "Back to Home"
+  }
+}

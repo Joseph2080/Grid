@@ -1,0 +1,235 @@
+{
+  "header": {
+    "nav": {
+      "platform": "Plateforme",
+      "technology": "Ecosystème",
+      "vision": "Cycle",
+      "company": "Contact",
+      "talkToUs": "Nous contacter"
+    }
+  },
+  "hero": {
+    "headline": "Construire l'économie numérique de demain",
+    "subheadline": "L'infrastructure qui aide les marchands à vendre dans toutes les régions avec des devises locales, au sein d'un système de commerce connecté.",
+    "ctaButton": "Découvrir la plateforme"
+  },
+  "economy": {
+    "eyebrow": "01 — L'économie numérique",
+    "title": "Le commerce devient une infrastructure.",
+    "description": "Vendre entre régions, devises et canaux ne doit plus dépendre d'outils séparés. Grid connecte les opérations commerciales dans un seul système conçu pour la croissance mondiale.",
+    "cta": "En savoir plus"
+  },
+  "platform": {
+    "eyebrow": "03 — La plateforme Grid",
+    "title": "Une plateforme. Plusieurs systèmes.",
+    "subtitle": "Toutes les capacités dont une économie numérique a besoin, connectées par défaut.",
+    "item1": {
+      "title": "Commerce",
+      "description": "Créez et exploitez des boutiques numériques qui s'adaptent à la façon dont on achète réellement."
+    },
+    "item2": {
+      "title": "Intelligence",
+      "description": "Des décisions pilotées par l'IA sur l'inventaire, les prix et la croissance."
+    },
+    "item3": {
+      "title": "Vente multi-devises",
+      "description": "Vendez dans n'importe quelle région avec un support des devises locales et des vitrines prêtes pour chaque marché."
+    },
+    "item4": {
+      "title": "Infrastructure",
+      "description": "Passez de votre première transaction à une économie mondiale sur une seule fondation."
+    }
+  },
+  "ai": {
+    "eyebrow": "Gestionnaire de boutique IA",
+    "title": "Votre entreprise dispose d'un opérateur IA.",
+    "subtitle": "Demandez. Décidez. Exécutez.",
+    "chat1": {
+      "you": "Quels produits sous-performent ce mois-ci ?",
+      "ai": "17 produits sont en dessous de leur référence de ventes sur 30 jours. J'ai identifié 6 candidats pour une promotion.",
+      "action": "Voir les recommandations"
+    },
+    "chat2": {
+      "you": "Créez une promotion de 15 % pour les trois meilleurs candidats.",
+      "ai": "Promotion créée.",
+      "stat1": "3 produits",
+      "stat2": "15 % de remise",
+      "stat3": "Valable 7 jours",
+      "action": "Publier la promotion"
+    }
+  },
+  "ecosystem": {
+    "eyebrow": "03 — Une économie connectée",
+    "title": "Une économie. Un système connecté.",
+    "description": "Clients, marchands, régions et devises circulent à travers un seul noyau connecté — visible, mesurable et toujours synchronisé."
+  },
+  "lifecycle": {
+    "eyebrow": "02 — Le cycle de vie du commerce",
+    "title": "Conçu pour l'ensemble du cycle de vie du commerce.",
+    "description": "De la découverte initiale à l'échelle mondiale, chaque étape repose sur la même infrastructure connectée.",
+    "stage1": "Découvrir",
+    "stage2": "Créer",
+    "stage3": "Vendre",
+    "stage4": "Transiger",
+    "stage5": "Analyser",
+    "stage6": "Optimiser",
+    "stage7": "Développer"
+  },
+  "finalCta": {
+    "title": "Construisons ce qui vient ensuite.",
+    "subtitle": "Grid construit l'infrastructure du commerce mondial pour permettre aux marchands de vendre des produits dans toutes les régions.",
+    "button": "Nous contacter"
+  },
+  "footer": {
+    "nav": {
+      "platform": "Plateforme",
+      "technology": "Ecosystème",
+      "vision": "Cycle"
+    },
+    "legal": {
+      "privacy": "politique de confidentialité",
+      "cookies": "politique des cookies"
+    },
+    "backToTop": "retour en haut",
+    "copyright": "Tous droits réservés © 2026 Grid"
+  },
+  "cookies": {
+    "title": "Politique des Cookies - BazarStore",
+    "heading": "Politique des Cookies",
+    "noTracking": {
+      "title": "Pas de Cookies, Pas de Suivi",
+      "description": "BazarStore n'utilise pas de cookies, de pixels de suivi ou d'autres technologies de suivi sur ce site web. Nous respectons votre vie privée et croyons en une expérience de navigation propre et sans cookies."
+    },
+    "whatAre": {
+      "title": "Que sont les Cookies ?",
+      "description": "Les cookies sont de petits fichiers texte que les sites web stockent généralement sur votre appareil pour mémoriser des informations vous concernant, telles que vos préférences, votre statut de connexion ou votre comportement de navigation."
+    },
+    "ourApproach": {
+      "title": "Notre Approche",
+      "description": "Nous avons délibérément choisi de ne pas implémenter de cookies ou de mécanismes de suivi sur notre site web. Cela signifie :"
+    },
+    "benefits": {
+      "noCookies": "Aucun cookie n'est stocké sur votre appareil",
+      "noTracking": "Aucun suivi de votre comportement de navigation",
+      "noAds": "Aucun cookie publicitaire ou traceur tiers",
+      "noAnalytics": "Aucun cookie analytique (nous utilisons uniquement des analyses côté serveur)",
+      "noConsent": "Aucune bannière de consentement aux cookies nécessaire"
+    },
+    "thirdParty": {
+      "title": "Services Tiers",
+      "description": "Bien que notre site web n'utilise pas de cookies, veuillez noter que si vous interagissez avec des services externes (tels que des vidéos intégrées ou du contenu de réseaux sociaux), ces services peuvent avoir leurs propres politiques de cookies."
+    },
+    "browserSettings": {
+      "title": "Paramètres du Navigateur",
+      "description": "Comme nous n'utilisons pas de cookies, vous n'avez pas besoin d'ajuster les paramètres de votre navigateur pour notre site web. Cependant, vous pouvez toujours configurer votre navigateur pour bloquer les cookies d'autres sites web si vous le souhaitez."
+    },
+    "futureChanges": {
+      "title": "Changements Futurs",
+      "description": "Si nous décidons d'implémenter des cookies à l'avenir, nous mettrons à jour cette politique et en informerons les utilisateurs en conséquence. Tout changement serait fait avec la vie privée des utilisateurs comme priorité absolue."
+    },
+    "contact": {
+      "title": "Questions ?",
+      "description": "Si vous avez des questions concernant notre politique de cookies ou nos pratiques de confidentialité, n'hésitez pas à nous contacter via les informations de contact fournies sur notre site web principal."
+    },
+    "lastUpdated": "Dernière mise à jour : 21 novembre 2025",
+    "backToHome": "Retour à l'Accueil"
+  },
+  "privacy": {
+    "title": "Politique de Confidentialité - BazarStore",
+    "heading": "Politique de Confidentialité",
+    "commitment": {
+      "title": "Notre Engagement de Confidentialité",
+      "description": "BazarStore s'engage à protéger votre vie privée et à garantir des pratiques de données transparentes. Cette politique décrit comment nous collectons, utilisons et protégeons vos informations lorsque vous utilisez notre application web."
+    },
+    "dataCollection": {
+      "title": "Informations que Nous Collectons",
+      "account": {
+        "title": "Informations de Compte",
+        "description": "Lorsque vous créez un compte avec BazarStore, nous collectons :",
+        "email": "Adresse e-mail (pour la connexion et les communications)",
+        "name": "Nom complet (pour la personnalisation)",
+        "profile": "Informations de profil que vous choisissez de fournir",
+        "preferences": "Préférences et paramètres utilisateur"
+      },
+      "session": {
+        "title": "Données de Session",
+        "description": "Pour fournir une expérience fluide, nous maintenons des données de session incluant :",
+        "login": "Statut de connexion et jetons d'authentification",
+        "cart": "Contenu du panier d'achat",
+        "navigation": "Historique de navigation dans l'application",
+        "temp": "Données temporaires pour la fonctionnalité de l'application"
+      },
+      "usage": {
+        "title": "Informations d'Usage",
+        "description": "Nous collectons des données d'usage agrégées pour améliorer nos services :",
+        "features": "Statistiques d'utilisation des fonctionnalités",
+        "performance": "Métriques de performance de l'application",
+        "errors": "Rapports d'erreur et journaux de plantage"
+      }
+    },
+    "dataUse": {
+      "title": "Comment Nous Utilisons Vos Informations",
+      "service": "Fournir et maintenir notre plateforme de commerce électronique",
+      "account": "Gérer votre compte et authentifier les utilisateurs",
+      "personalize": "Personnaliser votre expérience d'achat",
+      "communication": "Envoyer des communications importantes du service",
+      "security": "Détecter et prévenir les menaces de sécurité",
+      "improve": "Améliorer nos services et développer de nouvelles fonctionnalités"
+    },
+    "dataStorage": {
+      "title": "Stockage et Sécurité des Données",
+      "location": {
+        "title": "Lieu de Stockage",
+        "description": "Vos données sont stockées sur des serveurs sécurisés avec un chiffrement standard de l'industrie et des contrôles d'accès."
+      },
+      "session": {
+        "title": "Gestion des Sessions",
+        "description": "Les données de session sont temporairement stockées dans le stockage local de votre navigateur et expirent automatiquement après des périodes d'inactivité pour des raisons de sécurité."
+      },
+      "security": {
+        "title": "Mesures de Sécurité",
+        "encryption": "Chiffrement de bout en bout pour les données sensibles",
+        "access": "Contrôles d'accès stricts et authentification",
+        "monitoring": "Surveillance continue de la sécurité",
+        "updates": "Mises à jour et correctifs de sécurité réguliers"
+      }
+    },
+    "dataSharing": {
+      "title": "Partage des Données",
+      "description": "Nous ne vendons, ne louons ni ne partageons vos informations personnelles avec des tiers sauf dans les circonstances limitées suivantes :",
+      "service": "Avec des fournisseurs de services qui aident à la fonctionnalité de l'application (sous des accords de confidentialité stricts)",
+      "legal": "Lorsque requis par la loi ou pour protéger nos droits légaux",
+      "consent": "Avec votre consentement explicite"
+    },
+    "userRights": {
+      "title": "Vos Droits",
+      "description": "Vous avez les droits suivants concernant vos informations personnelles :",
+      "access": "Accéder à vos données personnelles",
+      "correct": "Corriger les informations inexactes",
+      "delete": "Demander la suppression de votre compte et de vos données",
+      "export": "Exporter vos données dans un format portable",
+      "opt": "Vous désinscrire des communications non essentielles"
+    },
+    "dataRetention": {
+      "title": "Conservation des Données",
+      "description": "Nous conservons vos informations seulement le temps nécessaire pour fournir nos services et remplir nos obligations légales. Les données de session sont automatiquement effacées lors de la déconnexion ou après des périodes prolongées d'inactivité."
+    },
+    "minors": {
+      "title": "Confidentialité des Mineurs",
+      "description": "BazarStore n'est pas destiné à être utilisé par des enfants de moins de 13 ans. Nous ne collectons pas sciemment d'informations personnelles d'enfants de moins de 13 ans."
+    },
+    "changes": {
+      "title": "Changements de Politique",
+      "description": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Nous informerons les utilisateurs de tout changement important par e-mail ou via l'interface de l'application."
+    },
+    "contact": {
+      "title": "Informations de Contact",
+      "description": "Si vous avez des questions concernant cette politique de confidentialité ou souhaitez exercer vos droits, veuillez nous contacter via les informations de contact fournies sur notre site web principal."
+    },
+    "lastUpdated": "Dernière mise à jour : 21 novembre 2025",
+    "backToHome": "Retour à l'Accueil"
+  },
+  "nav": {
+    "home": "Retour à l'Accueil"
+  }
+}

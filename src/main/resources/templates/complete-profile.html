@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complete your profile - Vektrlabs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/account.css?v=20260915">
+  <script src="/js/session.js?v=20260915" defer></script>
+  <script src="/js/complete-profile.js?v=20260913" defer></script>
+</head>
+<body data-allow-logout="true">
+<main class="auth-card">
+  <p id="profileMessage" role="status" aria-live="polite">Loading your profile...</p>
+  <div class="account-actions">
+    <button type="button" data-logout hidden class="text-link-button">Sign out</button>
+  </div>
+  <form id="profileForm">
+    <fieldset id="profileFields" disabled>
+      <label for="firstName">First name
+        <input id="firstName" name="firstName" autocomplete="given-name" maxlength="255" required>
+      </label>
+      <label for="middleName">Middle name (optional)
+        <input id="middleName" name="middleName" autocomplete="additional-name" maxlength="255">
+      </label>
+      <label for="lastName">Last name
+        <input id="lastName" name="lastName" autocomplete="family-name" maxlength="255" required>
+      </label>
+      <button type="submit">Save and continue</button>
+    </fieldset>
+  </form>
+  <button id="retryProfile" type="button" hidden>Reload profile</button>
+  <p><a id="backToStore" href="/">Continue browsing</a></p>
+  <noscript>JavaScript is required to securely complete your profile.</noscript>
+</main>
+</body>
+</html>
