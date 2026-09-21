@@ -157,7 +157,7 @@ public class StoreServiceImpl extends AbstractJpaService<
             key = "#name"
     )
     public StoreResponseDto findByStoreName(String name) {
-        var store = repository.findStoreByName(name).orElseThrow(() ->   new StoreNotFoundException("Store by " + name + " can  not be found nigga"));
+        var store = repository.findStoreByName(name).orElseThrow(() ->   new StoreNotFoundException("Store by " + name + " can  not be found."));
         StoreResponseDto storeResponseDto =  dtoMapper.convertEntityToResponseDto(store);
         storeResponseDto.setLogoUrl(mediaResourceService.generatePreSignedUrlForResource(store.getLogo().getId()));
         return storeResponseDto;

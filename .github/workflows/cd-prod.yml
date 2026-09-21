@@ -56,7 +56,7 @@ jobs:
 
       - name: Package and upload deploy assets
         run: |
-          tar -czf deploy-assets.tgz docker-compose.prod.yml scripts/deploy-on-ec2.sh scripts/render-env-from-ssm.sh
+          tar -czf deploy-assets.tgz docker-compose.prod.yml scripts/deploy-on-ec2.sh scripts/render-env-from-ssm.sh nginx/conf.d/app.conf
           aws s3 cp deploy-assets.tgz "s3://${DEPLOY_ASSET_BUCKET}/${{ steps.meta.outputs.asset_key }}"
 
   deploy:
@@ -83,6 +83,7 @@ jobs:
                 \"sudo chown -R ec2-user:ec2-user /opt/vektrlabs\",
                 \"aws s3 cp s3://${DEPLOY_ASSET_BUCKET}/${{ needs.build-and-publish.outputs.asset_key }} /tmp/vektrlabs-deploy-assets.tgz\",
                 \"tar -xzf /tmp/vektrlabs-deploy-assets.tgz -C /opt/vektrlabs\",
+                \"mkdir -p /opt/vektrlabs/nginx/conf.d /opt/vektrlabs/nginx/ssl\",
                 \"chmod +x /opt/vektrlabs/scripts/*.sh\",
                 \"cd /opt/vektrlabs\",
                 \"AWS_REGION=${AWS_REGION} ECR_REGISTRY=${{ needs.build-and-publish.outputs.ecr_registry }} ECR_REPOSITORY=${ECR_REPOSITORY} IMAGE_TAG=${{ needs.build-and-publish.outputs.image_tag }} SSM_PARAMETER_PATH_PREFIX=${SSM_PARAMETER_PATH_PREFIX} APP_PORT=${APP_PORT} ./scripts/deploy-on-ec2.sh\"

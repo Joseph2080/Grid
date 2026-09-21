@@ -64,6 +64,17 @@ required_keys=(
   SPRING_DATASOURCE_PASSWORD
   SESSION_COOKIE_SECURE
   PAYMENT_STRATEGY
+  AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY
+  AWS_S3_REGION
+  AWS_S3_BUCKET
+  STRIPE_API_KEY
+  SENDGRID_API_KEY
+  SENDGRID_SENDER_EMAIL
+  TWILIO_ACCOUNT_SID
+  TWILIO_AUTH_TOKEN
+  TWILIO_PHONE_NUMBER
+  OPENAI_API_KEY
 )
 
 missing_count=0
@@ -79,11 +90,11 @@ if [[ "${missing_count}" -gt 0 ]]; then
 fi
 
 if [[ "${PAYMENT_STRATEGY}" == "STRIPE" ]]; then
-  if [[ -z "${STRIPE_SECRET_KEY:-}" || -z "${STRIPE_PUBLISHABLE_KEY:-}" ]]; then
-    echo "Stripe live deployment requires STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY." >&2
+  if [[ -z "${STRIPE_API_KEY:-}" || -z "${STRIPE_PUBLISHABLE_KEY:-}" ]]; then
+    echo "Stripe live deployment requires STRIPE_API_KEY and STRIPE_PUBLISHABLE_KEY." >&2
     exit 1
   fi
-  if [[ "${STRIPE_SECRET_KEY}" != sk_live_* || "${STRIPE_PUBLISHABLE_KEY}" != pk_live_* ]]; then
+  if [[ "${STRIPE_API_KEY}" != sk_live_* || "${STRIPE_PUBLISHABLE_KEY}" != pk_live_* ]]; then
     echo "Stripe keys must be live-mode (sk_live_*/pk_live_*)." >&2
     exit 1
   fi
@@ -97,6 +108,9 @@ export APP_IMAGE APP_PORT
 
 docker pull "${APP_IMAGE}"
 docker compose --env-file "${ENV_OUTPUT_FILE}" -f "${COMPOSE_FILE}" up -d --remove-orphans
+
+# Ensure Nginx is reloaded to pick up potential config changes
+docker compose -f "${COMPOSE_FILE}" exec -T nginx nginx -s reload || true
 
 for _ in $(seq 1 30); do
   if curl -fsS "${HEALTHCHECK_URL}" >/dev/null 2>&1; then

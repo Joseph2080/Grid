@@ -5,14 +5,14 @@ set -euo pipefail
 # CONFIG (edit these first)
 # ==========================
 AWS_REGION="${AWS_REGION:-eu-central-1}"
-INSTANCE_NAME="${INSTANCE_NAME:-vektrlabs-prod-app}"
+INSTANCE_NAME="${INSTANCE_NAME:-Grid-prod-app}"
 INSTANCE_TYPE="${INSTANCE_TYPE:-t3.small}"
 AMI_ID="${AMI_ID:-}" # Leave empty to auto-resolve latest Amazon Linux 2023 AMI
 KEY_NAME="${KEY_NAME:-}" # Optional: existing EC2 key pair name for SSH
 VPC_ID="${VPC_ID:-}" # Optional: default VPC is auto-selected when empty
 SUBNET_ID="${SUBNET_ID:-}" # Optional: first subnet in selected VPC when empty
 SECURITY_GROUP_ID="${SECURITY_GROUP_ID:-}" # Optional: auto-create/find when empty
-SECURITY_GROUP_NAME="${SECURITY_GROUP_NAME:-vektrlabs-prod-sg}"
+SECURITY_GROUP_NAME="${SECURITY_GROUP_NAME:-Grid-prod-sg}"
 SSH_CIDR="${SSH_CIDR:-0.0.0.0/0}" # Restrict this in production
 WEB_CIDR="${WEB_CIDR:-0.0.0.0/0}"
 APP_PORT="${APP_PORT:-8080}"
@@ -22,8 +22,8 @@ ROOT_VOLUME_GB="${ROOT_VOLUME_GB:-30}"
 ENABLE_EIP="${ENABLE_EIP:-false}"
 
 CREATE_EC2_ROLE="${CREATE_EC2_ROLE:-true}"
-EC2_ROLE_NAME="${EC2_ROLE_NAME:-vektrlabs-prod-ec2-role}"
-INSTANCE_PROFILE_NAME="${INSTANCE_PROFILE_NAME:-vektrlabs-prod-ec2-profile}"
+EC2_ROLE_NAME="${EC2_ROLE_NAME:-Grid-prod-ec2-role}"
+INSTANCE_PROFILE_NAME="${INSTANCE_PROFILE_NAME:-Grid-prod-ec2-profile}"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -118,19 +118,54 @@ JSON
 
   aws iam create-role \
     --role-name "${EC2_ROLE_NAME}" \
-    --assume-role-policy-document "file://${trust_file}" >/dev/null 2>&1 || true
+    --assume-role-policy-document "file://${trust_file}" \
+    >/dev/null 2>&1 || true
+
   rm -f "${trust_file}"
 
-  aws iam attach-role-policy --role-name "${EC2_ROLE_NAME}" --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore >/dev/null
-  aws iam attach-role-policy --role-name "${EC2_ROLE_NAME}" --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly >/dev/null
-  aws iam attach-role-policy --role-name "${EC2_ROLE_NAME}" --policy-arn arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess >/dev/null
-  aws iam attach-role-policy --role-name "${EC2_ROLE_NAME}" --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy >/dev/null
-  aws iam attach-role-policy --role-name "${EC2_ROLE_NAME}" --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess >/dev/null
+  aws iam attach-role-policy \
+    --role-name "${EC2_ROLE_NAME}" \
+    --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 
-  aws iam create-instance-profile --instance-profile-name "${INSTANCE_PROFILE_NAME}" >/dev/null 2>&1 || true
-  aws iam add-role-to-instance-profile \
-    --instance-profile-name "${INSTANCE_PROFILE_NAME}" \
-    --role-name "${EC2_ROLE_NAME}" >/dev/null 2>&1 || true
+  aws iam attach-role-policy \
+    --role-name "${EC2_ROLE_NAME}" \
+    --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+
+  aws iam attach-role-policy \
+    --role-name "${EC2_ROLE_NAME}" \
+    --policy-arn arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+
+  aws iam attach-role-policy \
+    --role-name "${EC2_ROLE_NAME}" \
+    --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+
+  aws iam attach-role-policy \
+    --role-name "${EC2_ROLE_NAME}" \
+    --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+  # Create the instance profile if it doesn't exist
+  if ! aws iam get-instance-profile \
+      --instance-profile-name "${INSTANCE_PROFILE_NAME}" \
+      >/dev/null 2>&1; then
+
+    aws iam create-instance-profile \
+      --instance-profile-name "${INSTANCE_PROFILE_NAME}"
+  fi
+
+  # Check whether the role is already attached
+  if ! aws iam get-instance-profile \
+      --instance-profile-name "${INSTANCE_PROFILE_NAME}" \
+      --query "InstanceProfile.Roles[?RoleName=='${EC2_ROLE_NAME}'] | length(@)" \
+      --output text | grep -q '^1$'; then
+
+    aws iam add-role-to-instance-profile \
+      --instance-profile-name "${INSTANCE_PROFILE_NAME}" \
+      --role-name "${EC2_ROLE_NAME}"
+  fi
+
+  # IAM propagation can take a few seconds
+  echo "Waiting for IAM instance profile propagation..."
+  sleep 10
 fi
 
 run_instances_args=(
@@ -209,10 +244,13 @@ bootstrap_command_id="$(
       "set -euo pipefail",
       "sudo dnf install -y docker git jq awscli",
       "sudo dnf install -y docker-compose-plugin || true",
+      "sudo dnf install -y certbot python3-certbot-nginx || true",
       "sudo systemctl enable --now docker",
       "sudo usermod -aG docker ec2-user",
-      "sudo mkdir -p /opt/vektrlabs/scripts",
-      "sudo chown -R ec2-user:ec2-user /opt/vektrlabs"
+      "sudo mkdir -p /opt/Grid/scripts",
+      "sudo mkdir -p /opt/Grid/nginx/conf.d",
+      "sudo mkdir -p /opt/Grid/nginx/ssl",
+      "sudo chown -R ec2-user:ec2-user /opt/Grid"
     ]' \
     --query 'Command.CommandId' \
     --output text
