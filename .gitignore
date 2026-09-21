@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Secrets and setup scripts
+scripts/setup-ssm-parameters.sh
+scripts/setup-github-oidc.sh
+.env.production
