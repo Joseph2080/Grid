@@ -35,7 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### Application Configuration ###
-**/src/main/resources/application.properties
-!**/src/main/resources/application.properties.example
